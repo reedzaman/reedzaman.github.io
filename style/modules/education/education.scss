@@ -1,0 +1,103 @@
+.edu{
+    width:              100%;
+    display:            flex;
+    flex-direction:     column;
+    justify-content:    center;
+    align-items:        center;
+    font-family:        'Poppins', sans-serif;
+    color:              #344854;
+
+    &__container{
+        width:              80%;
+        margin:             0 30px;
+        display:            grid;
+        grid-template-columns: 1fr;
+        row-gap:            36px;
+        column-gap:         29px;
+    }
+
+    .edu__left, .edu__right{
+	display:	    flex;
+	flex-direction:     column;
+	align-items:   	    flex-end;
+    background-color:   #f9f9f9;
+    }
+
+    .edu__research, .edu__institute{
+        display:            flex;
+        flex-direction:     column;
+        justify-content:    space-between;
+        margin:             16px 0;
+    }
+
+    .edu__research_title, .edu__institute_title{
+        font-size:          14px;
+        font-weight:        400;
+        color:              inherit;
+        margin:      16px;
+    }
+
+    .edu__research_details, .edu__institute_details{
+        font-size:          0.7rem;
+        margin-bottom:      0.7rem;
+    }
+
+    .edu__know_more, .edu__institute_timespan{
+        font-size:          0.7rem;
+        margin-bottom:      0.7rem;
+    }
+
+    .edu__research_details, .edu__research_title, .edu__know_more, .edu__institute_title, .edu__institute_details, .edu__institute_timespan{
+        margin:             0.5rem 16px;
+    }
+
+    @media screen and (min-width: 950px){
+        .edu__container{
+	        grid-template-columns: 1fr 1fr;
+        
+            .edu__left, .edu__right{
+                background-color:       #fff;
+            }
+        }
+
+        .edu__left, .edu__right{
+	        justify-content:	center;
+	        margin:		16px 0;
+	    } 
+
+	    .edu__container{                                                                                                             
+            grid-template-columns: 1fr 1fr;                                                                                          
+	        column-gap: 0;
+        }    
+
+	    .edu__left{
+	        box-shadow:		1px 0 0 black;
+            z-index:        1;
+	        p{
+		        text-align:		right;
+	        }
+	    }
+
+	    .edu__research--bottom, .edu__institute--bottom{
+	        margin-top: 	50px;
+	    }
+	
+	    .edu__research, .edu__institute{
+            //box-shadow:         rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+	    }
+
+	    .edu__research_title, .edu__institute_title{
+	        font-size:		14px;
+    	    font-weight:        500;
+	        margin:		4px 48px;
+	    }
+
+	    .edu__research_details, .edu__know_more, .edu__institute_details, .edu__institute_timespan{
+	        font-size: 		0.8rem;
+    	    font-weight:        500;
+	        color:		grey;
+	        margin:		4px 48px;
+	    }
+    }
+
+}

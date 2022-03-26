@@ -1,0 +1,102 @@
+/*
+ * Flexbox Starts Here
+ */
+
+.flex{
+    display:flex;
+}
+.flex-col{
+    display:flex;
+    flex-direction: column;
+}
+.flex-center-center{
+    align-items: center;
+    justify-content: center;
+}
+.flex-center{
+    justify-content: center;
+}
+.flex-right{
+    justify-content: right;
+}
+.flex-mid{
+    align-items: center;
+}
+.flex-bottom{
+    align-items: flex-end;
+}
+.flex-col-center{
+    align-items: center;
+}
+.flex-col-right{
+    align-items: flex-end;
+}
+.flex-col-mid{
+    justify-content: center;
+}
+.flex-col-bottom{
+    justify-content: right;
+}
+
+
+
+/*
+ * Length Starts Here
+ */
+
+.width-full{
+    width: 100%;
+}
+.min-height-full{
+    min-height: 100vh;
+}
+.height-short{
+    height: 32px;
+}
+.border{
+    border: 1px solid red;
+}
+
+
+/*
+ * Margin Starts Here
+ */
+
+.margin{
+    margin: 16px;
+}
+.margin-extra{
+    margin: 32px;
+}
+.margin-lr{
+    margin: 0 16px;
+}
+.margin-lr-extra{
+    margin: 0 32px;
+}
+.margin-tb{
+    margin: 16px 0;
+}
+.margin-tb-extra{
+    margin: 32px 0;
+}
+.margin-left{
+    margin-left: 16px;
+}
+.margin-left-small{
+    margin-left:   8px;
+}
+.margin-right{
+    margin-right: 16px;
+}
+.margin-top{
+    margin-top: 16px;
+}
+.margin-bottom{
+    margin-bottom: 16px;
+}
+
+
+.padding-lr{
+    padding: 0 16px;
+}

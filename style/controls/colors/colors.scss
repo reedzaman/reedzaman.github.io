@@ -1,0 +1,40 @@
+@function color($color-name){
+    @return map-get($map: $colors, $key: $color-name)
+};
+
+@function color_dark($color-name){
+    @return map-get($map: $colors_dark, $key: $color-name)
+};
+
+$colors: (
+    black: #000,
+    text: #36474f, //#000,
+    bg: #ffdc69,
+    bg_secondary: white,
+    nav: #bbbbbb,
+    nav_hovered: #606060,
+    active: #003638,
+    secondary: #5bb5f8 ,//#53B8BB,
+    secondary_light: #76c4ff,//#31e1e7,
+    bar: rgba($color: #757575, $alpha: 0.5)
+);
+
+$colors_dark: (
+    text: rgb(233, 233, 233),
+    bg: #222831,
+    bg_secondary: #2C394B,
+    nav: #bbbbbb,
+    nav_hovered: #606060,
+    active: #16213E,
+    secondary: #595B83,
+    secondary_light: #31e1e7,
+    bar: rgba($color: #757575, $alpha: 0.5)
+);
+
+$skill_logo_shadow:   0 2.8px 2.2px rgba(0, 0, 0, 0.016),
+0 6.7px 5.3px rgba(0, 0, 0, 0.024),
+0 12.5px 10px rgba(0, 0, 0, 0.030),
+0 22.3px 17.9px rgba(0, 0, 0, 0.032),
+0 41.8px 33.4px rgba(0, 0, 0, 0.042),
+0 100px 80px rgba(0, 0, 0, 0.06)
+;

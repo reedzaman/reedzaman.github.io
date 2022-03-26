@@ -1,0 +1,36 @@
+.skills{
+    width:              100%;
+    min-height:         100vh;
+    display:            flex;
+    flex-direction:     column;
+    align-items:        center;
+    justify-content:    center;
+    font-family:        'Poppins', sans-serif;
+    color:              black;
+
+    &__container{
+        width:              80%;
+        margin:             0 30px;
+        display:            grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap:            29px;
+        column-gap:         29px;
+    }
+
+    &__card{
+        display:            flex;
+        flex-direction:     column;
+        justify-content:    space-between;
+        align-items:        center;
+        box-shadow:         rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    	cursor:		        solid;
+
+        svg{
+            margin:             12px 16px;
+        }
+
+        p{
+            margin-bottom:  16px;
+        }
+    }
+}

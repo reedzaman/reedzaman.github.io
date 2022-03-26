@@ -1,0 +1,89 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: #455a66;
+}
+
+.navigation {
+  width: 100%;
+  min-height: 50px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #fff;
+  z-index: 1000;
+}
+.navigation .logo {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  color: #414f57;
+  margin: 16px;
+  cursor: pointer;
+  padding: 10px 0;
+}
+.navigation .logo span {
+  font-family: inherit;
+  font-weight: 500;
+}
+.navigation__bar {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 2px 0px rgba(52, 72, 84, 0.1);
+}
+.navigation__menu_horizontal {
+  width: 50%;
+  max-width: 800px;
+  height: 100%;
+  margin-left: auto;
+  margin-right: 72px;
+}
+.navigation__menu_horizontal ul {
+  display: inline-flex;
+  justify-content: right;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.navigation__menu_horizontal ul li {
+  min-width: 16.66%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s background-color ease;
+}
+.navigation__menu_horizontal ul li a {
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-family: "Poppins", sans-serif;
+  color: #768591;
+  transition: 0.2s color ease;
+}
+.navigation__menu_horizontal ul li:hover {
+  background-color: #f0f0f0;
+}
+.navigation__menu_horizontal ul li:hover > a {
+  color: #000;
+}
+
+.wrapper {
+  width: 1200px;
+  min-height: 100vh;
+  margin: 0 auto;
+  margin-top: 60px;
+  padding-top: 16px;
+}
+
+#KEY {
+  max-width: 30px;
+}
+
+/*# sourceMappingURL=main.css.map */

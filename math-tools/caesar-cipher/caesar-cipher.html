@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Caesar Cipher Step by Step Reed Zaman</title>
+    <link rel="stylesheet" href="./style/main.css">
+    <link rel="stylesheet" href="./style/basic.css">
+    <link rel="stylesheet" href="./style/pos-daddy.css">
+</head>
+<body>
+    <nav class="navigation">
+        <div class="navigation__bar">
+            <p class="logo" onclick='location.href="#HOME"'>REED<span>ZAMAN</span></p>
+		    <div class="navigation__menu_horizontal" id="NAV__H">
+		        <ul>
+			        <li><a class="navigation__menu_horizontal__a" href="#">Other Tools</a></li>
+			        <li><a class="navigation__menu_horizontal__a" href="#">Github</a></li>
+		        </ul>
+		    </div>
+        </div>
+    </nav>
+    <div class="wrapper">
+        <header>
+            <div class="header-container flex-col flex-col-center">
+                <h1 class="margin">Caesar / Vigenere / Multiplicative cipher online</h1>
+                <h2 class="margin">Step by Step</h2>
+            </div>
+        </header>
+        <section class="main margin-top">
+            <div class="main__input_output flex width-full flex-center">
+                <textarea id="in" class="textbox margin" name="" cols="30" rows="10" placeholder="Plain Text Here"></textarea>
+                <textarea id="out" class="textbox margin" name="" cols="30" rows="10" placeholder="Encrypted Text Here"></textarea>
+            </div>        
+            <div class="main__selections flex flex-center width-full">
+                <select id="cipher-name" class="margin" name="">
+                    <option value="caesar">Caesar/Additive Cipher</option>
+                    <option value="mult">Multiplicative Cipher</option>
+                    <option value="affin">Affin Cipher</option>
+                </select>
+                <div class="key flex flex-center-center margin grey_back padding-lr">
+                    <label class="flex flex-mid" for="KEY">Key:</label>
+                    <input class="margin-left grey_border no_outline" id="KEY" type="text" placeholder="13" value="13">
+                </div>
+                <div class="main__en_or_de flex flex-center-center margin grey_back padding-lr">
+                    <input id="en" class="radio" type="radio" name="en_or_de" value="en_to_de" checked>
+                    <label for="en" class="flex flex-mid margin-left-small">Plain Text To Encrypted Text</label>
+                    <input id="de" class="radio margin-left" type="radio" name="en_or_de" value="de_to_en">
+                    <label for="de" class="flex flex-mid margin-left-small">Encrypted Text To Plain Text</label>
+                </div>
+                <div class="main__step flex flex-center-center margin  margin grey_back padding-lr">
+                    <input id="step" type="checkbox">
+                    <label class="flex flex-mid margin-left-small" for="step">Show Step by Step Solution</label>
+                </div>
+            </div>
+            <div class="main__control flex flex-center width-full">
+                <button id="BTN" class="btn btn-main margin">Encrypt</button>
+            </div>
+        </section>
+        <section id="TABLE" class="width-full flex flex-center padding-top">
+
+        </section>
+    </div>
+    <script type="module">
+        import resolve from './js/main.js';
+        
+
+        document.getElementById("BTN").addEventListener("click", () => {
+            const input_text = document.getElementById("in").value;
+            const selection_list = document.getElementById("cipher-name");
+            const cipher_type = selection_list.options[selection_list.selectedIndex].value;
+            const key = document.getElementById("KEY").value;
+            const encrypt_or_decrypt = document.getElementsByName("en_or_de")[0].checked? 'e' : 'd';
+            const step_by_step = document.getElementById("step").checked; 
+            
+            resolve(input_text, cipher_type, key, encrypt_or_decrypt, step_by_step) 
+        });
+    </script>
+</body>
+</html>

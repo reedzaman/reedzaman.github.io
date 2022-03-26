@@ -1,0 +1,103 @@
+.blog {
+  width: 100%;
+  min-height: 100vh;
+  margin: 100px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: inherit;
+  color: #444950;
+  font-family: 'Poppins', sans-serif;
+}
+
+.blog__heading {
+  text-align: center;
+  margin: 0 50px 36px 50px;
+}
+
+.blog__heading p {
+  font-weight: 500;
+  font-size: 29px;
+  font-family: inherit;
+  color: inherit;
+  letter-spacing: 2px;
+}
+
+.blog__post_container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  -ms-grid-rows: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+  row-gap: 36px;
+  -webkit-column-gap: 29px;
+          column-gap: 29px;
+  margin: 0 30px;
+  width: 80%;
+}
+
+.blog__image {
+  margin-bottom: 27px;
+}
+
+.blog__image img {
+  width: 100%;
+  height: auto;
+}
+
+.blog__post_card {
+  background-color: #fdfdfd;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+          box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+}
+
+.blog__post_title {
+  font-family: inherit;
+  font-size: 16px;
+  letter-spacing: .36px;
+  line-height: 150%;
+  margin: 0 16px 16px 16px;
+}
+
+.blog__post_title p {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.blog__line {
+  height: 2px;
+  width: 30%;
+  margin: auto 16px 10px 16px;
+  background-color: #444950;
+}
+
+.blog__date {
+  font-size: 0.7rem;
+  letter-spacing: .28px;
+  line-height: 150%;
+  opacity: 0.75;
+  margin: 0 16px 10px 16px;
+  bottom: 0;
+}
+/*# sourceMappingURL=blog.css.map */
