@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+
+
+.space-grotesk-<uniquifier> {
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
+
+@layer base {
+  /* Body: Open Sans - 400 (Paragraph style) */
+  body {
+    @apply bg-white font-sans antialiased;
+    font-family: "Open Sans", Arial, "Times New Roman", Georgia, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    color: rgb(99, 107, 136);
+    font-size: 14px;
+    line-height: 22px;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Headers: Open Sans - 600 */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Open Sans", Arial, "Times New Roman", Georgia, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    color: rgb(99, 107, 136);
+    font-size: 36px;
+    line-height: 46px;
+  }
+  
+  /* Paragraphs: Open Sans - 400 */
+  p {
+    font-family: "Open Sans", Arial, "Times New Roman", Georgia, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    color: rgb(99, 107, 136);
+    font-size: 14px;
+    line-height: 22px;
+  }
+  
+  a {
+    @apply transition-colors duration-200;
+  }
+  
+  button {
+    @apply transition-all duration-200;
+  }
+}
+
+@layer utilities {
+  .section-padding {
+    @apply py-20 md:py-28;
+  }
+  
+  .container-custom {
+    @apply max-w-6xl mx-auto px-6 md:px-8 lg:px-12;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Performance optimizations for animations */
+@media (prefers-reduced-motion: no-preference) {
+  [class*="animate"] {
+    will-change: transform, opacity;
+  }
+}
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Chat typing animation dots */
+.chat-typing-dot {
+  animation: typing-bounce 1.4s infinite ease-in-out;
+}
+
+.chat-typing-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.chat-typing-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes typing-bounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  40% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+
