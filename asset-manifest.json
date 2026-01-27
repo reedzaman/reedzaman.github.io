@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3e662f99.css",
+    "main.js": "/static/js/main.b3810a5d.js",
+    "static/media/reed.png": "/static/media/reed.13ff2ecda0074b77d3c3.png",
+    "index.html": "/index.html",
+    "main.3e662f99.css.map": "/static/css/main.3e662f99.css.map",
+    "main.b3810a5d.js.map": "/static/js/main.b3810a5d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3e662f99.css",
+    "static/js/main.b3810a5d.js"
+  ]
+}
