@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
-  <title>Reed & Elin — Our Growing Love</title>
+  <title>Reed &amp; Elin — Our Growing Love</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,31 +13,49 @@
     html,body{
       width:100%;height:100dvh;overflow:hidden;
       position:fixed;inset:0;
-      background:#eae5da;
+      background:#fbf9f5;
       font-family:'Plus Jakarta Sans',sans-serif;
       -webkit-font-smoothing:antialiased;
+      color:#2b261f;
     }
 
     /* ── Loading Screen ── */
     #loader{
-      position:fixed;inset:0;background:#eae5da;z-index:999;
+      position:fixed;inset:0;background:#fbf9f5;z-index:999;
       display:flex;flex-direction:column;align-items:center;justify-content:center;
       transition:opacity .8s ease,visibility .8s;
+      padding:2rem;text-align:center;
     }
     #loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
     .lr{
-      width:50px;height:50px;border:2px solid #e0d5c0;border-top-color:#b8942e;
-      border-radius:50%;animation:sp 1s linear infinite;margin-bottom:1.6rem;
+      width:56px;height:56px;
+      border:2.5px solid rgba(212,175,55,.25);
+      border-top-color:#d4af37;
+      border-radius:50%;
+      position:relative;
+      animation:sp 1.2s cubic-bezier(0.5,0.1,0.5,0.9) infinite;
+      margin-bottom:1.8rem;
+    }
+    .lr::after{
+      content:'💎';
+      position:absolute;
+      top:-13px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:15px;
+      filter:drop-shadow(0 0 5px rgba(212,175,55,.7));
     }
     @keyframes sp{to{transform:rotate(360deg)}}
     .ln{
       font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;
-      letter-spacing:.12em;text-transform:uppercase;color:#2d2a22;margin-bottom:.35rem;
+      letter-spacing:.12em;text-transform:uppercase;color:#28231a;margin-bottom:.35rem;
     }
-    .ls{font-size:.78rem;color:#8a8578;letter-spacing:.14em;text-transform:uppercase;margin-bottom:1.4rem}
+    .ln span.amp{font-style:italic;color:#c5991e;font-size:2rem;margin:0 .25rem}
+    .ls{font-size:.78rem;color:#7e7769;letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.4rem}
     .lb{
-      background:#2d2a22;color:#fff;border:none;padding:.7rem 2rem;border-radius:999px;
+      background:#28231a;color:#fff;border:none;padding:.72rem 2.2rem;border-radius:999px;
       font-size:.78rem;letter-spacing:.14em;cursor:pointer;display:none;
+      box-shadow:0 4px 16px rgba(40,35,26,.15);
       animation:pb 2s infinite ease-in-out;
     }
     @keyframes pb{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
@@ -48,15 +66,16 @@
 
     /* ── Audio Pill ── */
     .ap{
-      position:absolute;top:clamp(.8rem,2.5vh,1.4rem);right:clamp(.8rem,3vw,1.8rem);z-index:20;
-      background:rgba(255,255,255,.2);backdrop-filter:blur(8px);
-      border:1px solid rgba(255,255,255,.35);border-radius:999px;
-      padding:.38rem .85rem;display:inline-flex;align-items:center;gap:.4rem;
-      font-size:.7rem;letter-spacing:.08em;color:rgba(40,36,28,.55);cursor:pointer;
-      transition:all .25s;
+      position:absolute;top:clamp(.8rem,2.5vh,1.4rem);right:clamp(.8rem,3vw,1.8rem);z-index:30;
+      background:rgba(255,255,255,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      border:1px solid rgba(212,175,55,.3);border-radius:999px;
+      padding:.38rem .9rem;display:inline-flex;align-items:center;gap:.45rem;
+      font-size:.7rem;letter-spacing:.09em;color:#4a4235;cursor:pointer;
+      box-shadow:0 2px 10px rgba(0,0,0,.04);
+      transition:all .25s ease;
     }
-    .ap:hover{background:rgba(255,255,255,.4);color:rgba(40,36,28,.8)}
-    .ap.on{color:#4a7c2c;border-color:rgba(74,124,44,.35)}
+    .ap:hover{background:rgba(255,255,255,.9);color:#1f1c16;border-color:rgba(212,175,55,.6)}
+    .ap.on{color:#3d6b1f;border-color:rgba(61,107,31,.4)}
     .eb{display:flex;align-items:flex-end;gap:2px;height:10px}
     .eb span{width:2px;background:currentColor;border-radius:1px;height:2px}
     .ap.on .eb span:nth-child(1){animation:e1 .7s ease-in-out infinite alternate}
@@ -66,48 +85,75 @@
     @keyframes e2{0%{height:3px}100%{height:8px}}
     @keyframes e3{0%{height:2px}100%{height:9px}}
 
-    /* ── Counter Overlay (ground area, NO boxes) ── */
-    .co{
-      position:absolute;left:0;right:0;top:77%;
-      text-align:center;z-index:10;pointer-events:none;
-      padding:0 1rem;
+    /* ── Top Sky Overlay (Title + Timer + Leaves Badge) ── */
+    .top-overlay{
+      position:absolute;top:clamp(.7rem,2.2vh,1.6rem);left:0;right:0;
+      display:flex;flex-direction:column;align-items:center;text-align:center;
+      z-index:20;pointer-events:none;padding:0 1rem;
     }
-    .ml{
-      font-family:'Cormorant Garamond',serif;font-style:italic;
-      font-size:clamp(.85rem,1.6vw,1.1rem);color:rgba(240,232,218,.7);
-      margin-bottom:clamp(.2rem,.8vh,.5rem);letter-spacing:.05em;
+    .title-row{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1.7rem,4.4vw,2.7rem);
+      font-weight:300;letter-spacing:.12em;text-transform:uppercase;
+      line-height:1;color:#28231a;margin-bottom:.25rem;
     }
-    .cg{display:flex;justify-content:center;gap:clamp(.8rem,3.5vw,2.5rem)}
+    .title-row span.amp{font-style:italic;color:#c5991e;font-size:.9em;margin:0 .25rem}
+    .ceremony-sub{
+      font-size:clamp(.62rem,1.2vw,.76rem);font-weight:600;
+      letter-spacing:.22em;text-transform:uppercase;color:#7a7263;
+      margin-bottom:clamp(.4rem,1.2vh,.75rem);
+    }
+    .cg{display:flex;align-items:baseline;justify-content:center;gap:clamp(.45rem,2.4vw,1.6rem)}
     .cc{display:flex;flex-direction:column;align-items:center}
     .cv{
       font-family:'Cormorant Garamond',serif;
-      font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:300;
-      color:#f0e8da;line-height:1;font-variant-numeric:tabular-nums;
-      text-shadow:0 1px 4px rgba(0,0,0,.18);
+      font-size:clamp(1.6rem,4vw,2.6rem);font-weight:300;
+      color:#252018;line-height:1;font-variant-numeric:tabular-nums;
+      text-shadow:0 1px 3px rgba(255,255,255,.9);
     }
     .cl{
-      font-size:clamp(.52rem,1vw,.65rem);font-weight:600;
+      font-size:clamp(.48rem,.85vw,.6rem);font-weight:600;
       letter-spacing:.22em;text-transform:uppercase;
-      color:rgba(240,232,218,.45);margin-top:.15rem;
+      color:#827a6b;margin-top:.15rem;
     }
-    .gb{
-      font-size:clamp(.65rem,1.2vw,.78rem);
-      color:rgba(240,232,218,.5);letter-spacing:.08em;
-      margin-top:clamp(.2rem,.8vh,.5rem);
+    .c-sep{
+      font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2.5vw,1.8rem);
+      color:#d4af37;opacity:.65;user-select:none;
+    }
+    .leaf-badge{
+      display:inline-flex;align-items:center;gap:.35rem;
+      background:rgba(255,255,255,.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+      border:1px solid rgba(212,175,55,.28);border-radius:999px;
+      padding:.22rem .8rem;margin-top:clamp(.35rem,1vh,.65rem);
+      font-size:clamp(.65rem,1.15vw,.76rem);font-weight:500;
+      color:#3a5c22;letter-spacing:.04em;
+      box-shadow:0 2px 8px rgba(0,0,0,.03);
     }
 
-    /* ── Responsive Tweaks ── */
-    @media(max-height:680px){
-      .co{top:78%}
-      .cv{font-size:clamp(1.5rem,4vw,2.4rem)}
-      .ml{font-size:.8rem}
+    /* ── Ring Sparkle Animation ── */
+    @keyframes diamondGlint{
+      0%,100%{opacity:.3;transform:scale(.8)}
+      50%{opacity:1;transform:scale(1.2)}
     }
-    @media(max-height:580px){
-      .co{top:79%}
-      .cv{font-size:1.4rem}
-      .cl{font-size:.5rem}
-      .ml{font-size:.72rem}
-      .gb{font-size:.6rem}
+    .diamond-sparkle{
+      animation:diamondGlint 3s ease-in-out infinite;
+      transform-origin:800px 814px;
+    }
+    @keyframes ringAuraPulse{
+      0%,100%{opacity:.75;transform:scale(1)}
+      50%{opacity:1;transform:scale(1.06)}
+    }
+    .ring-aura{
+      animation:ringAuraPulse 4s ease-in-out infinite;
+      transform-origin:800px 870px;
+    }
+
+    @media(max-height:640px){
+      .title-row{font-size:1.5rem}
+      .ceremony-sub{font-size:.58rem;margin-bottom:.25rem}
+      .cv{font-size:1.35rem}
+      .cl{font-size:.45rem}
+      .leaf-badge{font-size:.6rem;padding:.15rem .6rem;margin-top:.25rem}
     }
   </style>
 </head>
@@ -116,140 +162,234 @@
 <!-- Loading Screen -->
 <div id="loader">
   <div class="lr"></div>
-  <div class="ln">Reed &amp; Elin</div>
+  <div class="ln">Reed <span class="amp">&amp;</span> Elin</div>
   <div id="lst" class="ls">Loading ...</div>
-  <button id="lbtn" class="lb">▶</button>
+  <button id="lbtn" class="lb">▶ Enter</button>
 </div>
 
 <!-- Scene -->
 <div class="scene">
   <svg id="svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
     <defs>
+      <!-- Sunny Winter Noon Sky: Crisp pale cyan fading to sunny crystal white and warm solar horizon -->
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="750" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#c6dde9"/>
-        <stop offset="50%" stop-color="#d8e4ec"/>
-        <stop offset="100%" stop-color="#eee8dc"/>
+        <stop offset="0%" stop-color="#cae5f8"/>
+        <stop offset="35%" stop-color="#deeff9"/>
+        <stop offset="72%" stop-color="#f8fbfd"/>
+        <stop offset="100%" stop-color="#fff8eb"/>
       </linearGradient>
+
+      <!-- Winter Sun Glow -->
+      <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff6d6" stop-opacity=".85"/>
+        <stop offset="35%" stop-color="#faecc0" stop-opacity=".4"/>
+        <stop offset="70%" stop-color="#fdf8ea" stop-opacity=".15"/>
+        <stop offset="100%" stop-color="#fdf8ea" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="sunInner" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="50%" stop-color="#fffbe8" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#faecc0" stop-opacity="0"/>
+      </radialGradient>
+
+      <!-- Sunny Winter Noon Ground: Light, warm sunlit loam -->
       <linearGradient id="gnd" x1="0" y1="750" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#7a6b52"/>
-        <stop offset="45%" stop-color="#5f4d3a"/>
-        <stop offset="100%" stop-color="#48362a"/>
+        <stop offset="0%" stop-color="#b8a68b"/>
+        <stop offset="30%" stop-color="#a49074"/>
+        <stop offset="70%" stop-color="#8e7a60"/>
+        <stop offset="100%" stop-color="#7a674f"/>
       </linearGradient>
+
+      <!-- Bark Texture Gradient: Rich sunlit chestnut -->
       <linearGradient id="bark" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#3a2a18"/><stop offset="50%" stop-color="#4e3a28"/><stop offset="100%" stop-color="#382816"/>
+        <stop offset="0%" stop-color="#463422"/>
+        <stop offset="50%" stop-color="#6e5338"/>
+        <stop offset="100%" stop-color="#42311e"/>
       </linearGradient>
+
+      <!-- Golden Ring Gradient -->
       <linearGradient id="rgld" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#f5e6b8"/><stop offset="40%" stop-color="#d4af37"/><stop offset="100%" stop-color="#a07c1c"/>
+        <stop offset="0%" stop-color="#fff1bd"/>
+        <stop offset="35%" stop-color="#f2cf65"/>
+        <stop offset="70%" stop-color="#d4af37"/>
+        <stop offset="100%" stop-color="#9a7414"/>
       </linearGradient>
+
+      <!-- Highlighted Ring Radial Aura Glow -->
+      <radialGradient id="ringAura" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff5c7" stop-opacity=".75"/>
+        <stop offset="30%" stop-color="#fedc78" stop-opacity=".45"/>
+        <stop offset="65%" stop-color="#d4af37" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+      </radialGradient>
     </defs>
 
     <!-- Sky -->
     <rect x="-200" y="-200" width="2000" height="960" fill="url(#sky)"/>
-    <!-- Ground -->
-    <rect x="-200" y="750" width="2000" height="460" fill="url(#gnd)"/>
 
-    <!-- Clouds -->
-    <g opacity=".55">
-      <g><animateTransform attributeName="transform" type="translate" values="-300,0;1900,0" dur="130s" repeatCount="indefinite"/>
-        <ellipse cx="0" cy="125" rx="72" ry="22" fill="rgba(255,255,255,.6)"/>
-        <ellipse cx="36" cy="115" rx="52" ry="18" fill="rgba(255,255,255,.72)"/>
-        <ellipse cx="58" cy="128" rx="38" ry="13" fill="rgba(255,255,255,.48)"/>
-      </g>
-      <g><animateTransform attributeName="transform" type="translate" values="1800,0;-400,0" dur="100s" repeatCount="indefinite"/>
-        <ellipse cx="0" cy="210" rx="55" ry="17" fill="rgba(255,255,255,.5)"/>
-        <ellipse cx="28" cy="202" rx="38" ry="14" fill="rgba(255,255,255,.6)"/>
-      </g>
-      <g><animateTransform attributeName="transform" type="translate" values="-500,0;2000,0" dur="160s" repeatCount="indefinite"/>
-        <ellipse cx="0" cy="78" rx="82" ry="26" fill="rgba(255,255,255,.4)"/>
-        <ellipse cx="42" cy="68" rx="55" ry="20" fill="rgba(255,255,255,.52)"/>
-        <ellipse cx="68" cy="80" rx="42" ry="15" fill="rgba(255,255,255,.35)"/>
-      </g>
-      <g><animateTransform attributeName="transform" type="translate" values="1600,0;-200,0" dur="85s" repeatCount="indefinite"/>
-        <ellipse cx="0" cy="300" rx="34" ry="10" fill="rgba(255,255,255,.3)"/>
-        <ellipse cx="18" cy="295" rx="24" ry="8" fill="rgba(255,255,255,.38)"/>
+    <!-- Sunny Winter Noon Sun (Sun disc + halo) -->
+    <g transform="translate(1220, 130)">
+      <circle cx="0" cy="0" r="160" fill="url(#sunGlow)"/>
+      <circle cx="0" cy="0" r="75" fill="url(#sunInner)"/>
+      <circle cx="0" cy="0" r="30" fill="#ffffff"/>
+      <!-- Soft solar rays -->
+      <g opacity=".28" stroke="#ffeaa7" stroke-width="1.2">
+        <line x1="0" y1="-55" x2="0" y2="-95"/>
+        <line x1="0" y1="55" x2="0" y2="95"/>
+        <line x1="-55" y1="0" x2="-95" y2="0"/>
+        <line x1="55" y1="0" x2="95" y2="0"/>
+        <line x1="-39" y1="-39" x2="-68" y2="-68"/>
+        <line x1="39" y1="39" x2="68" y2="68"/>
+        <line x1="-39" y1="39" x2="-68" y2="68"/>
+        <line x1="39" y1="-39" x2="68" y2="-68"/>
       </g>
     </g>
 
-    <!-- Underground: Ring + Couple Silhouettes -->
-    <g>
-      <circle cx="800" cy="870" r="54" fill="rgba(212,175,55,.07)"/>
-      <circle cx="800" cy="870" r="42" fill="none" stroke="url(#rgld)" stroke-width="5.5"/>
-      <circle cx="800" cy="870" r="38" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-      <!-- Diamond mount -->
-      <polygon points="795,830 800,822 805,830" fill="#d4af37"/>
-      <line x1="793" y1="828" x2="807" y2="828" stroke="#f5e6b8" stroke-width="1.8" stroke-linecap="round"/>
-      <!-- Diamond gem -->
-      <polygon points="800,814 808,824 805,830 795,830 792,824" fill="rgba(255,255,255,.78)" stroke="#c5991e" stroke-width=".8"/>
-      <!-- Sparkle -->
-      <g opacity=".45">
-        <line x1="800" y1="809" x2="800" y2="818" stroke="#d4af37" stroke-width="1" stroke-linecap="round">
-          <animate attributeName="opacity" values=".25;.85;.25" dur="2.5s" repeatCount="indefinite"/></line>
-        <line x1="795" y1="813" x2="805" y2="813" stroke="#d4af37" stroke-width="1" stroke-linecap="round">
-          <animate attributeName="opacity" values=".25;.85;.25" dur="2.5s" repeatCount="indefinite" begin=".9s"/></line>
+    <!-- Gentle Winter Noon Clouds -->
+    <g opacity=".6">
+      <g><animateTransform attributeName="transform" type="translate" values="-350,0;1950,0" dur="140s" repeatCount="indefinite"/>
+        <ellipse cx="0" cy="115" rx="80" ry="24" fill="rgba(255,255,255,.7)"/>
+        <ellipse cx="40" cy="104" rx="58" ry="20" fill="rgba(255,255,255,.82)"/>
+        <ellipse cx="65" cy="118" rx="42" ry="15" fill="rgba(255,255,255,.55)"/>
       </g>
-      <!-- Couple: Reed (left, taller suit) -->
-      <g transform="translate(789,858)" fill="#d4af37" opacity=".85">
+      <g><animateTransform attributeName="transform" type="translate" values="1850,0;-400,0" dur="110s" repeatCount="indefinite"/>
+        <ellipse cx="0" cy="195" rx="60" ry="18" fill="rgba(255,255,255,.55)"/>
+        <ellipse cx="30" cy="187" rx="42" ry="15" fill="rgba(255,255,255,.68)"/>
+      </g>
+      <g><animateTransform attributeName="transform" type="translate" values="-550,0;2050,0" dur="170s" repeatCount="indefinite"/>
+        <ellipse cx="0" cy="70" rx="90" ry="28" fill="rgba(255,255,255,.45)"/>
+        <ellipse cx="46" cy="58" rx="60" ry="22" fill="rgba(255,255,255,.6)"/>
+        <ellipse cx="75" cy="72" rx="46" ry="16" fill="rgba(255,255,255,.4)"/>
+      </g>
+      <g><animateTransform attributeName="transform" type="translate" values="1650,0;-250,0" dur="95s" repeatCount="indefinite"/>
+        <ellipse cx="0" cy="275" rx="38" ry="11" fill="rgba(255,255,255,.35)"/>
+        <ellipse cx="20" cy="270" rx="26" ry="9" fill="rgba(255,255,255,.45)"/>
+      </g>
+    </g>
+
+    <!-- Subterranean Ground -->
+    <rect x="-200" y="750" width="2000" height="460" fill="url(#gnd)"/>
+
+    <!-- ── Underground: Highlighted Sacred Ring & Couple Silhouettes ── -->
+    <g id="undergroundRing">
+      <!-- Radiant Golden Aura Spotlight -->
+      <circle class="ring-aura" cx="800" cy="870" r="105" fill="url(#ringAura)"/>
+      
+      <!-- Ambient light shimmer particles -->
+      <circle cx="755" cy="840" r="1.5" fill="#fff5cc" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" repeatCount="indefinite"/></circle>
+      <circle cx="845" cy="845" r="1.8" fill="#fff5cc" opacity=".7"><animate attributeName="opacity" values=".7;.2;.7" dur="3.5s" repeatCount="indefinite"/></circle>
+      <circle cx="740" cy="890" r="1.2" fill="#fedc78" opacity=".5"><animate attributeName="opacity" values=".3;.9;.3" dur="2.8s" repeatCount="indefinite"/></circle>
+      <circle cx="860" cy="885" r="1.4" fill="#fedc78" opacity=".6"><animate attributeName="opacity" values=".8;.3;.8" dur="4s" repeatCount="indefinite"/></circle>
+
+      <!-- Soft Outer Golden Ring Glow -->
+      <circle cx="800" cy="870" r="42" fill="none" stroke="#ffe794" stroke-width="9" opacity=".22"/>
+      
+      <!-- Primary Gold Ring Band -->
+      <circle cx="800" cy="870" r="42" fill="none" stroke="url(#rgld)" stroke-width="5.5"/>
+      <!-- Inner Specular Gleam -->
+      <circle cx="800" cy="870" r="39.5" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.2" stroke-dasharray="24 65"/>
+      <circle cx="800" cy="870" r="44.5" fill="none" stroke="rgba(255,245,200,.3)" stroke-width=".8"/>
+
+      <!-- Diamond mount (solid gold prongs) -->
+      <polygon points="794,831 800,821 806,831" fill="#f0ca55"/>
+      <line x1="792" y1="828" x2="808" y2="828" stroke="#fff4cf" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Diamond gem (faceted crystalline cuts) -->
+      <polygon points="800,812 809,823 806,831 794,831 791,823" fill="#ffffff" stroke="#c5991e" stroke-width=".8"/>
+      <polygon points="800,812 804,823 800,831 796,823" fill="#edf7fc" opacity=".95"/>
+      <polygon points="791,823 796,823 794,831" fill="#d4edf8" opacity=".85"/>
+      <polygon points="809,823 804,823 806,831" fill="#d4edf8" opacity=".85"/>
+      <polygon points="800,812 796,823 791,823" fill="#f4fbfe"/>
+      <polygon points="800,812 804,823 809,823" fill="#f4fbfe"/>
+
+      <!-- Diamond Sparkle Glint Flare -->
+      <g class="diamond-sparkle">
+        <line x1="800" y1="804" x2="800" y2="824" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="790" y1="814" x2="810" y2="814" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="800" cy="814" r="2.4" fill="#ffffff"/>
+        <circle cx="800" cy="814" r="5.5" fill="#fff5cc" opacity=".55"/>
+      </g>
+
+      <!-- Couple: Reed (left, taller groom) -->
+      <g transform="translate(789,858)" fill="#fce494">
         <circle cx="0" cy="-9" r="4.2"/>
         <path d="M-3.8-5 L-4.8 10 L-.8 10 L0 1.5 L.8 10 L4.8 10 L3.8-5Z"/>
-        <line x1="-3" y1="10" x2="-4.2" y2="19" stroke="#d4af37" stroke-width="2" stroke-linecap="round"/>
-        <line x1="3" y1="10" x2="4.2" y2="19" stroke="#d4af37" stroke-width="2" stroke-linecap="round"/>
+        <line x1="-3" y1="10" x2="-4.2" y2="19" stroke="#fce494" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="3" y1="10" x2="4.2" y2="19" stroke="#fce494" stroke-width="2.2" stroke-linecap="round"/>
       </g>
-      <!-- Couple: Elin (right, flowing dress) -->
-      <g transform="translate(811,860)" fill="#d4af37" opacity=".85">
+
+      <!-- Couple: Elin (right, bride in elegant flowing gown) -->
+      <g transform="translate(811,860)" fill="#fce494">
         <circle cx="0" cy="-9" r="4"/>
-        <path d="M-3.2-5.5 L-6.5 17 L6.5 17 L3.2-5.5Z"/>
-        <path d="M2-11Q5.5-7 5.5 0Q4.5-4 2.5-7" fill="#d4af37" opacity=".6"/>
+        <path d="M-3.2-5.5 L-7 18 L7 18 L3.2-5.5Z"/>
+        <path d="M2-11Q6-7 6 0Q5-4 2.5-7" fill="#fce494" opacity=".85"/>
       </g>
-      <text x="800" y="906" font-family="'Plus Jakarta Sans',sans-serif" font-size="7.5" letter-spacing="3" fill="#d4af37" text-anchor="middle" opacity=".6">FOREVER</text>
+      
+      <!-- Holding Hands -->
+      <line x1="792.5" y1="863" x2="807.5" y2="863" stroke="#fce494" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Sacred Union Text -->
+      <text x="800" y="907" font-family="'Plus Jakarta Sans',sans-serif" font-size="7.5" font-weight="600" letter-spacing="3.5" fill="#fae08c" text-anchor="middle" opacity=".9">FOREVER</text>
     </g>
 
     <!-- Ground Line -->
-    <line x1="-200" y1="750" x2="1800" y2="750" stroke="#6a5c48" stroke-width="1.5"/>
+    <line x1="-200" y1="750" x2="1800" y2="750" stroke="#9e8a71" stroke-width="1.6"/>
 
-    <!-- Tree Shadow -->
-    <ellipse cx="800" cy="754" rx="95" ry="5" fill="rgba(0,0,0,.07)"/>
+    <!-- Tree Shadow on Ground -->
+    <ellipse cx="800" cy="753" rx="90" ry="4.5" fill="rgba(0,0,0,.06)"/>
 
-    <!-- Grass (JS) -->
+    <!-- Grass (Generated via JS) -->
     <g id="gL"></g>
 
-    <!-- Bushes (strictly above ground) -->
+    <!-- Bushes (above ground) -->
     <g>
-      <ellipse cx="698" cy="743" rx="22" ry="10" fill="#3a6b22"/>
-      <ellipse cx="703" cy="740" rx="17" ry="8.5" fill="#4a7c2c"/>
-      <ellipse cx="695" cy="741" rx="12" ry="7" fill="#5c8e3a"/>
-      <ellipse cx="918" cy="744" rx="17" ry="9" fill="#3a6b22"/>
-      <ellipse cx="922" cy="742" rx="13" ry="7" fill="#4a7c2c"/>
+      <ellipse cx="698" cy="744" rx="22" ry="10" fill="#427329"/>
+      <ellipse cx="703" cy="741" rx="17" ry="8.5" fill="#558836"/>
+      <ellipse cx="695" cy="742" rx="12" ry="7" fill="#699f47"/>
+      <ellipse cx="918" cy="745" rx="17" ry="9" fill="#427329"/>
+      <ellipse cx="922" cy="743" rx="13" ry="7" fill="#558836"/>
     </g>
 
-    <!-- Tree Trunk -->
-    <path d="M787 750 C786 718 788 692 786 665 C785 638 789 612 788 585 C787 558 791 532 790 505 C789 478 793 452 792 425 C791 398 795 372 794 345 C793 318 796 292 795 265 C794 238 798 215 797 205 L799 195 L801 195 L803 205 C806 215 808 238 807 265 C808 292 810 318 809 345 C810 372 812 398 811 425 C812 452 813 478 812 505 C813 532 815 558 814 585 C815 612 816 638 815 665 C816 692 817 718 816 750Z" fill="url(#bark)"/>
-    <!-- Bark texture -->
-    <path d="M795 750Q794 550 797 400Q798 300 798 200" stroke="#2a1e10" stroke-width=".6" fill="none" opacity=".18"/>
-    <path d="M807 750Q808 600 806 450Q804 350 803 250" stroke="#2a1e10" stroke-width=".5" fill="none" opacity=".18"/>
-    <path d="M800 750Q799 600 801 450Q800 350 800 200" stroke="#584838" stroke-width=".4" fill="none" opacity=".12"/>
+    <!-- Tree Group (scaled to sit gracefully beneath the sunny sky overlay) -->
+    <g id="treeGroup" transform="translate(800, 750) scale(0.92, 0.85) translate(-800, -750)">
+      <!-- Tree Trunk -->
+      <path d="M787 750 C786 718 788 692 786 665 C785 638 789 612 788 585 C787 558 791 532 790 505 C789 478 793 452 792 425 C791 398 795 372 794 345 C793 318 796 292 795 265 C794 238 798 215 797 205 L799 195 L801 195 L803 205 C806 215 808 238 807 265 C808 292 810 318 809 345 C810 372 812 398 811 425 C812 452 813 478 812 505 C813 532 815 558 814 585 C815 612 816 638 815 665 C816 692 817 718 816 750Z" fill="url(#bark)"/>
+      <!-- Bark texture highlights -->
+      <path d="M795 750Q794 550 797 400Q798 300 798 200" stroke="#332415" stroke-width=".6" fill="none" opacity=".2"/>
+      <path d="M807 750Q808 600 806 450Q804 350 803 250" stroke="#332415" stroke-width=".5" fill="none" opacity=".2"/>
+      <path d="M800 750Q799 600 801 450Q800 350 800 200" stroke="#876848" stroke-width=".5" fill="none" opacity=".18"/>
 
-    <!-- Branches (JS) -->
-    <g id="bL"></g>
-    <!-- Leaves (JS) -->
-    <g id="fL"></g>
+      <!-- Branches (JS) -->
+      <g id="bL"></g>
+      <!-- Leaves (JS) -->
+      <g id="fL"></g>
+    </g>
   </svg>
 
-  <!-- Audio Pill -->
+  <!-- Audio Pill (Top Right) -->
   <button id="ab" class="ap" aria-label="Toggle Music">
     <span class="eb"><span></span><span></span><span></span></span>
     <span id="al">Play</span>
   </button>
 
-  <!-- Counter Overlay -->
-  <div class="co">
-    <p class="ml">Married September 18, 2026 · KG</p>
+  <!-- Top Sky Overlay (Title + Timer + Leaves Badge — Clear of the Ring) -->
+  <div class="top-overlay">
+    <h1 class="title-row">Reed <span class="amp">&amp;</span> Elin</h1>
+    <p class="ceremony-sub">Married September 18, 2026 · KG</p>
+    
     <div class="cg">
       <div class="cc"><span id="vd" class="cv">00</span><span class="cl">DAYS</span></div>
+      <div class="c-sep">·</div>
       <div class="cc"><span id="vh" class="cv">00</span><span class="cl">HOURS</span></div>
-      <div class="cc"><span id="vm" class="cv">00</span><span class="cl">MINUTES</span></div>
-      <div class="cc"><span id="vs" class="cv">00</span><span class="cl">SECONDS</span></div>
+      <div class="c-sep">·</div>
+      <div class="cc"><span id="vm" class="cv">00</span><span class="cl">MINS</span></div>
+      <div class="c-sep">·</div>
+      <div class="cc"><span id="vs" class="cv">00</span><span class="cl">SECS</span></div>
     </div>
-    <p id="gb" class="gb"></p>
+
+    <div class="leaf-badge">
+      <span id="gb">🌿 0 Leaves Bloomed · Tree Growing</span>
+    </div>
   </div>
 </div>
 
@@ -318,7 +458,7 @@ const B=[
 const TD=[0,30,90,180,365,730,1825,3650];
 const TE=11; // trunk ends at index 11
 
-const GRN=['#3d6b1f','#4a7c2c','#5d8e3c','#4e8a30','#6b9e4e','#3a6522','#578a38','#70a548','#498228','#5c9440'];
+const GRN=['#3e6f21','#4e842e','#61973f','#519133','#72a753','#3c6a23','#5c923b','#77b04d','#4d8b2a','#63a044'];
 
 const bL=document.getElementById('bL');
 const fL=document.getElementById('fL');
@@ -344,7 +484,7 @@ function drawB(i){
   const p=document.createElementNS(NS,'path');
   p.setAttribute('d',`M${b[0]} ${b[1]}Q${mx.toFixed(1)} ${my.toFixed(1)} ${b[2]} ${b[3]}`);
   const ci=i%3;
-  p.setAttribute('stroke',ci===0?'#3e2b1a':ci===1?'#4a3728':'#544232');
+  p.setAttribute('stroke',ci===0?'#483522':ci===1?'#56412f':'#634f3c');
   p.setAttribute('stroke-width',b[4]);
   p.setAttribute('fill','none');
   p.setAttribute('stroke-linecap','round');
@@ -416,22 +556,22 @@ function updateLeaves(n){
   while(nLeaves<n){nLeaves++;fL.appendChild(mkLeaf(nLeaves))}
 }
 
-/* ── Grass Generation ── */
+/* ── Grass Generation (Sunlit winter noon palette) ── */
 function genGrass(){
   const r=m32(42);let h='';
   for(let i=0;i<550;i++){
     const x=(i/550)*1800-100+(r()-.5)*4;
     const ht=3+r()*30;
     const cv=(r()-.5)*14;
-    const gr=55+r()*95,rd=22+r()*42,bl=5+r()*22;
+    const gr=75+r()*105,rd=40+r()*50,bl=15+r()*25;
     const w=.6+r()*1.4;
     h+=`<path d="M${x.toFixed(1)} 750Q${(x+cv).toFixed(1)} ${(750-ht*.5).toFixed(1)} ${(x+cv*.6).toFixed(1)} ${(750-ht).toFixed(1)}" stroke="rgb(${rd|0},${gr|0},${bl|0})" stroke-width="${w.toFixed(1)}" fill="none" stroke-linecap="round"/>`;
   }
-  // Wildflower seed accents
+  // Wildflower seed accents (snowdrops, buttercups, soft petals)
   for(let i=0;i<45;i++){
     const x=r()*1800-100,y=750-5-r()*20;
-    const cls=['#f4e8c0','#e8c0c0','#c0d8e8','#f0d0e0','#d0e0c0','#e8d8c0'];
-    h+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(.7+r()*1.2).toFixed(1)}" fill="${cls[r()*6|0]}" opacity="${(.35+r()*.5).toFixed(2)}"/>`;
+    const cls=['#fff9e6','#fae2e2','#d8edf8','#f6deec','#e0f0d2','#faeedc'];
+    h+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(.7+r()*1.3).toFixed(1)}" fill="${cls[r()*6|0]}" opacity="${(.45+r()*.5).toFixed(2)}"/>`;
   }
   gL.innerHTML=h;
 }
