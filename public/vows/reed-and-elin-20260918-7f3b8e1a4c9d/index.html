@@ -1,869 +1,633 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="robots" content="noindex, nofollow" />
-  <title>Reed & Elin — Forever</title>
-  
-  <!-- Minimalist Typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Reed &amp; Elin — Our Growing Love</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-color: #faf8f5;
-      --card-bg: #ffffff;
-      --text-main: #1b1920;
-      --text-muted: #797587;
-      --line-color: #e5e0d5;
-      --line-active: #c59a42;
-      --gold-accent: #c59a42;
-      --gold-soft: #f3ebd6;
-      --border-soft: rgba(0, 0, 0, 0.06);
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{
+      width:100%;height:100dvh;overflow:hidden;
+      position:fixed;inset:0;
+      background:#fbf9f5;
+      font-family:'Plus Jakarta Sans',sans-serif;
+      -webkit-font-smoothing:antialiased;
+      color:#2b261f;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
+    /* ── Loading Screen ── */
+    #loader{
+      position:fixed;inset:0;background:#fbf9f5;z-index:999;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      transition:opacity .8s ease,visibility .8s;
+      padding:2rem;text-align:center;
+    }
+    #loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .lr{
+      width:56px;height:56px;
+      border:2.5px solid rgba(212,175,55,.25);
+      border-top-color:#d4af37;
+      border-radius:50%;
+      position:relative;
+      animation:sp 1.2s cubic-bezier(0.5,0.1,0.5,0.9) infinite;
+      margin-bottom:1.8rem;
+    }
+    .lr::after{
+      content:'💎';
+      position:absolute;
+      top:-13px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:15px;
+      filter:drop-shadow(0 0 5px rgba(212,175,55,.7));
+    }
+    @keyframes sp{to{transform:rotate(360deg)}}
+    .ln{
+      font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;
+      letter-spacing:.12em;text-transform:uppercase;color:#28231a;margin-bottom:.35rem;
+    }
+    .ln span.amp{font-style:italic;color:#c5991e;font-size:2rem;margin:0 .25rem}
+    .ls{font-size:.78rem;color:#7e7769;letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.4rem}
+    .lb{
+      background:#28231a;color:#fff;border:none;padding:.72rem 2.2rem;border-radius:999px;
+      font-size:.78rem;letter-spacing:.14em;cursor:pointer;display:none;
+      box-shadow:0 4px 16px rgba(40,35,26,.15);
+      animation:pb 2s infinite ease-in-out;
+    }
+    @keyframes pb{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+
+    /* ── Scene ── */
+    .scene{position:fixed;inset:0;overflow:hidden}
+    #svg{position:absolute;top:0;left:0;width:100%;height:100%}
+
+    /* ── Audio Pill ── */
+    .ap{
+      position:absolute;top:clamp(.8rem,2.5vh,1.4rem);right:clamp(.8rem,3vw,1.8rem);z-index:30;
+      background:rgba(255,255,255,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      border:1px solid rgba(212,175,55,.3);border-radius:999px;
+      padding:.38rem .9rem;display:inline-flex;align-items:center;gap:.45rem;
+      font-size:.7rem;letter-spacing:.09em;color:#4a4235;cursor:pointer;
+      box-shadow:0 2px 10px rgba(0,0,0,.04);
+      transition:all .25s ease;
+    }
+    .ap:hover{background:rgba(255,255,255,.9);color:#1f1c16;border-color:rgba(212,175,55,.6)}
+    .ap.on{color:#3d6b1f;border-color:rgba(61,107,31,.4)}
+    .eb{display:flex;align-items:flex-end;gap:2px;height:10px}
+    .eb span{width:2px;background:currentColor;border-radius:1px;height:2px}
+    .ap.on .eb span:nth-child(1){animation:e1 .7s ease-in-out infinite alternate}
+    .ap.on .eb span:nth-child(2){animation:e2 .5s ease-in-out infinite alternate .2s}
+    .ap.on .eb span:nth-child(3){animation:e3 .8s ease-in-out infinite alternate .1s}
+    @keyframes e1{0%{height:2px}100%{height:10px}}
+    @keyframes e2{0%{height:3px}100%{height:8px}}
+    @keyframes e3{0%{height:2px}100%{height:9px}}
+
+    /* ── Top Sky Overlay (Title + Timer + Leaves Badge) ── */
+    .top-overlay{
+      position:absolute;top:clamp(.7rem,2.2vh,1.6rem);left:0;right:0;
+      display:flex;flex-direction:column;align-items:center;text-align:center;
+      z-index:20;pointer-events:none;padding:0 1rem;
+    }
+    .title-row{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1.7rem,4.4vw,2.7rem);
+      font-weight:300;letter-spacing:.12em;text-transform:uppercase;
+      line-height:1;color:#28231a;margin-bottom:.25rem;
+    }
+    .title-row span.amp{font-style:italic;color:#c5991e;font-size:.9em;margin:0 .25rem}
+    .ceremony-sub{
+      font-size:clamp(.62rem,1.2vw,.76rem);font-weight:600;
+      letter-spacing:.22em;text-transform:uppercase;color:#7a7263;
+      margin-bottom:clamp(.4rem,1.2vh,.75rem);
+    }
+    .cg{display:flex;align-items:baseline;justify-content:center;gap:clamp(.45rem,2.4vw,1.6rem)}
+    .cc{display:flex;flex-direction:column;align-items:center}
+    .cv{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1.6rem,4vw,2.6rem);font-weight:300;
+      color:#252018;line-height:1;font-variant-numeric:tabular-nums;
+      text-shadow:0 1px 3px rgba(255,255,255,.9);
+    }
+    .cl{
+      font-size:clamp(.48rem,.85vw,.6rem);font-weight:600;
+      letter-spacing:.22em;text-transform:uppercase;
+      color:#827a6b;margin-top:.15rem;
+    }
+    .c-sep{
+      font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2.5vw,1.8rem);
+      color:#d4af37;opacity:.65;user-select:none;
+    }
+    .leaf-badge{
+      display:inline-flex;align-items:center;gap:.35rem;
+      background:rgba(255,255,255,.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+      border:1px solid rgba(212,175,55,.28);border-radius:999px;
+      padding:.22rem .8rem;margin-top:clamp(.35rem,1vh,.65rem);
+      font-size:clamp(.65rem,1.15vw,.76rem);font-weight:500;
+      color:#3a5c22;letter-spacing:.04em;
+      box-shadow:0 2px 8px rgba(0,0,0,.03);
     }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      height: 100dvh;
-      max-height: 100dvh;
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      overflow: hidden; /* Strictly no scroll */
-      position: fixed;
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      -webkit-font-smoothing: antialiased;
+    /* ── Ring Sparkle Animation ── */
+    @keyframes diamondGlint{
+      0%,100%{opacity:.3;transform:scale(.8)}
+      50%{opacity:1;transform:scale(1.2)}
+    }
+    .diamond-sparkle{
+      animation:diamondGlint 3s ease-in-out infinite;
+      transform-origin:800px 814px;
+    }
+    @keyframes ringAuraPulse{
+      0%,100%{opacity:.75;transform:scale(1)}
+      50%{opacity:1;transform:scale(1.06)}
+    }
+    .ring-aura{
+      animation:ringAuraPulse 4s ease-in-out infinite;
+      transform-origin:800px 870px;
     }
 
-    /* ============================================================
-       LOADING SCREEN
-       ============================================================ */
-    #loadingScreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100dvh;
-      background-color: var(--bg-color);
-      z-index: 999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
-    }
-
-    #loadingScreen.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .loader-ring {
-      width: 58px;
-      height: 58px;
-      border: 2px solid var(--gold-soft);
-      border-top-color: var(--gold-accent);
-      border-radius: 50%;
-      animation: spinRing 1.2s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
-      margin-bottom: 1.8rem;
-      position: relative;
-    }
-
-    .loader-ring::after {
-      content: '💎';
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 14px;
-    }
-
-    @keyframes spinRing {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .loader-names {
-      font-family: var(--font-serif);
-      font-size: 2.2rem;
-      letter-spacing: 0.12em;
-      font-weight: 300;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-      color: var(--text-main);
-    }
-
-    .loader-status {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .loader-enter-btn {
-      background: var(--text-main);
-      color: #ffffff;
-      border: none;
-      padding: 0.75rem 2.2rem;
-      border-radius: 999px;
-      font-size: 0.82rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: none;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-      animation: pulseBtn 2s infinite ease-in-out;
-    }
-
-    @keyframes pulseBtn {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-    }
-
-    .loader-enter-btn:hover {
-      background: #000000;
-      transform: translateY(-2px);
-    }
-
-    /* ============================================================
-       PAGE CONTAINER (TIGHTLY CENTERED, FULL HEIGHT, NO SCROLL)
-       ============================================================ */
-    .page-layout {
-      width: 100%;
-      height: 100dvh;
-      max-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center; /* Intimately clustered at the center */
-      align-items: center;
-      padding: 1.25rem 1.25rem 1.25rem;
-      max-width: 820px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    /* Top Floating Controls */
-    .top-bar {
-      position: absolute;
-      top: clamp(1rem, 2.5vh, 1.8rem);
-      left: clamp(1rem, 3vw, 2rem);
-      right: clamp(1rem, 3vw, 2rem);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 10;
-    }
-
-    .date-pill {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .audio-btn {
-      background: var(--card-bg);
-      border: 1px solid var(--border-soft);
-      border-radius: 9999px;
-      padding: 0.4rem 0.95rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-      transition: all 0.25s ease;
-    }
-
-    .audio-btn:hover {
-      color: var(--text-main);
-      border-color: rgba(0, 0, 0, 0.15);
-    }
-
-    .audio-btn.playing {
-      color: var(--gold-accent);
-      border-color: var(--gold-soft);
-    }
-
-    /* Equalizer Bars */
-    .eq-bars {
-      display: inline-flex;
-      align-items: flex-end;
-      gap: 2px;
-      height: 10px;
-      width: 10px;
-    }
-
-    .eq-bar {
-      width: 2px;
-      background: currentColor;
-      border-radius: 1px;
-      height: 2px;
-      transition: height 0.2s ease;
-    }
-
-    .audio-btn.playing .eq-bar:nth-child(1) { animation: eq1 0.7s ease-in-out infinite alternate; }
-    .audio-btn.playing .eq-bar:nth-child(2) { animation: eq2 0.5s ease-in-out infinite alternate 0.2s; }
-    .audio-btn.playing .eq-bar:nth-child(3) { animation: eq3 0.8s ease-in-out infinite alternate 0.1s; }
-
-    @keyframes eq1 { 0% { height: 2px; } 100% { height: 10px; } }
-    @keyframes eq2 { 0% { height: 3px; } 100% { height: 8px; } }
-    @keyframes eq3 { 0% { height: 2px; } 100% { height: 9px; } }
-
-    /* ============================================================
-       CENTERED CONTENT CLUSTER
-       ============================================================ */
-    .center-cluster {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: clamp(0.75rem, 2vh, 1.4rem);
-    }
-
-    /* Header Section (Brought down close to the timeline) */
-    .header-section {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .names-title {
-      font-family: var(--font-serif);
-      font-size: clamp(2.4rem, 6.5vw, 4.2rem);
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      line-height: 1;
-      color: var(--text-main);
-      margin-bottom: 0.4rem;
-    }
-
-    .names-title span.amp {
-      font-style: italic;
-      text-transform: lowercase;
-      color: var(--gold-accent);
-      margin: 0 0.35rem;
-    }
-
-    .ceremony-subtext {
-      font-size: clamp(0.82rem, 2vw, 0.95rem);
-      color: var(--text-muted);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-
-    /* ============================================================
-       ULTRA ZOOMED-IN TIMELINE (Hero Centerpiece)
-       viewBox="0 0 540 190" makes everything 2-3x larger!
-       ============================================================ */
-    .timeline-container {
-      width: 100%;
-      max-width: 680px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .timeline-svg {
-      width: 100%;
-      height: auto;
-      overflow: visible;
-      display: block;
-    }
-
-    /* Straight Line Styles */
-    .track-line-base {
-      stroke: var(--line-color);
-      stroke-width: 2.5;
-      stroke-linecap: round;
-    }
-
-    .track-line-active {
-      stroke: var(--line-active);
-      stroke-width: 3;
-      stroke-linecap: round;
-    }
-
-    /* Characters & Motion */
-    .character-node {
-      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .char-name {
-      font-family: var(--font-sans);
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      fill: var(--text-main);
-      text-anchor: middle;
-      text-transform: uppercase;
-    }
-
-    .char-status {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 13px;
-      fill: var(--text-muted);
-      text-anchor: middle;
-    }
-
-    /* Central Ring */
-    .ring-center {
-      transform-origin: 270px 95px;
-      animation: ringBreath 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes ringBreath {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.05); }
-    }
-
-    .ring-sparkle {
-      animation: diamondGlint 2.5s ease-in-out infinite;
-      transform-origin: 270px 65px;
-    }
-
-    @keyframes diamondGlint {
-      0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
-      50% { opacity: 1; transform: scale(1.3) rotate(45deg); filter: drop-shadow(0 0 8px rgba(197, 154, 66, 0.9)); }
-    }
-
-    /* ============================================================
-       COUNTDOWN SECTION (Brought Closer to Center)
-       ============================================================ */
-    .countdown-section {
-      width: 100%;
-      max-width: 580px;
-    }
-
-    .countdown-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: clamp(0.4rem, 1.2vw, 0.75rem);
-      text-align: center;
-    }
-
-    .countdown-unit {
-      background: var(--card-bg);
-      border: 1px solid var(--border-soft);
-      border-radius: 12px;
-      padding: clamp(0.7rem, 2vh, 1.15rem) 0.3rem clamp(0.55rem, 1.5vh, 0.85rem);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
-      transition: transform 0.25s ease;
-    }
-
-    .countdown-number {
-      font-family: var(--font-serif);
-      font-size: clamp(2.1rem, 5.5vw, 3.2rem);
-      font-weight: 300;
-      color: var(--text-main);
-      line-height: 1;
-      margin-bottom: 0.25rem;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .countdown-tag {
-      font-size: clamp(0.6rem, 1.2vw, 0.7rem);
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    /* Footer Quote */
-    .footer-quote {
-      text-align: center;
-    }
-
-    .quote-text {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: clamp(0.95rem, 2vw, 1.15rem);
-      color: var(--text-muted);
-      font-weight: 300;
-      line-height: 1.3;
+    @media(max-height:640px){
+      .title-row{font-size:1.5rem}
+      .ceremony-sub{font-size:.58rem;margin-bottom:.25rem}
+      .cv{font-size:1.35rem}
+      .cl{font-size:.45rem}
+      .leaf-badge{font-size:.6rem;padding:.15rem .6rem;margin-top:.25rem}
     }
   </style>
 </head>
 <body>
 
-  <!-- ============================================================
-       LOADING SCREEN
-       ============================================================ -->
-  <div id="loadingScreen">
-    <div class="loader-ring"></div>
-    <div class="loader-names">Reed &amp; Elin</div>
-    <div id="loaderStatus" class="loader-status">Loading ...</div>
-    <button id="loaderEnterBtn" class="loader-enter-btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-    </button>
-  </div>
+<!-- Loading Screen -->
+<div id="loader">
+  <div class="lr"></div>
+  <div class="ln">Reed <span class="amp">&amp;</span> Elin</div>
+  <div id="lst" class="ls">Loading ...</div>
+  <button id="lbtn" class="lb">▶ Enter</button>
+</div>
 
-  <!-- ============================================================
-       MAIN PAGE (Intimately Centered, 100dvh, No Scroll)
-       ============================================================ -->
-  <div class="page-layout">
+<!-- Scene -->
+<div class="scene">
+  <svg id="svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <!-- Sunny Winter Noon Sky: Crisp pale cyan fading to sunny crystal white and warm solar horizon -->
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="750" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#cae5f8"/>
+        <stop offset="35%" stop-color="#deeff9"/>
+        <stop offset="72%" stop-color="#f8fbfd"/>
+        <stop offset="100%" stop-color="#fff8eb"/>
+      </linearGradient>
+
+      <!-- Winter Sun Glow -->
+      <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff6d6" stop-opacity=".85"/>
+        <stop offset="35%" stop-color="#faecc0" stop-opacity=".4"/>
+        <stop offset="70%" stop-color="#fdf8ea" stop-opacity=".15"/>
+        <stop offset="100%" stop-color="#fdf8ea" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="sunInner" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="50%" stop-color="#fffbe8" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#faecc0" stop-opacity="0"/>
+      </radialGradient>
+
+      <!-- Sunny Winter Noon Ground: Light, warm sunlit loam -->
+      <linearGradient id="gnd" x1="0" y1="750" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#b8a68b"/>
+        <stop offset="30%" stop-color="#a49074"/>
+        <stop offset="70%" stop-color="#8e7a60"/>
+        <stop offset="100%" stop-color="#7a674f"/>
+      </linearGradient>
+
+      <!-- Bark Texture Gradient: Rich sunlit chestnut -->
+      <linearGradient id="bark" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#463422"/>
+        <stop offset="50%" stop-color="#6e5338"/>
+        <stop offset="100%" stop-color="#42311e"/>
+      </linearGradient>
+
+      <!-- Golden Ring Gradient -->
+      <linearGradient id="rgld" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#fff1bd"/>
+        <stop offset="35%" stop-color="#f2cf65"/>
+        <stop offset="70%" stop-color="#d4af37"/>
+        <stop offset="100%" stop-color="#9a7414"/>
+      </linearGradient>
+
+      <!-- Highlighted Ring Radial Aura Glow -->
+      <radialGradient id="ringAura" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff5c7" stop-opacity=".75"/>
+        <stop offset="30%" stop-color="#fedc78" stop-opacity=".45"/>
+        <stop offset="65%" stop-color="#d4af37" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Sky -->
+    <rect x="-200" y="-200" width="2000" height="960" fill="url(#sky)"/>
+
+    <!-- Sunny Winter Noon Sun (Sun disc + halo) -->
+    <g transform="translate(1220, 130)">
+      <circle cx="0" cy="0" r="160" fill="url(#sunGlow)"/>
+      <circle cx="0" cy="0" r="75" fill="url(#sunInner)"/>
+      <circle cx="0" cy="0" r="30" fill="#ffffff"/>
+      <!-- Soft solar rays -->
+      <g opacity=".28" stroke="#ffeaa7" stroke-width="1.2">
+        <line x1="0" y1="-55" x2="0" y2="-95"/>
+        <line x1="0" y1="55" x2="0" y2="95"/>
+        <line x1="-55" y1="0" x2="-95" y2="0"/>
+        <line x1="55" y1="0" x2="95" y2="0"/>
+        <line x1="-39" y1="-39" x2="-68" y2="-68"/>
+        <line x1="39" y1="39" x2="68" y2="68"/>
+        <line x1="-39" y1="39" x2="-68" y2="68"/>
+        <line x1="39" y1="-39" x2="68" y2="-68"/>
+      </g>
+    </g>
+
+    <!-- Gentle Winter Noon Clouds -->
+    <g opacity=".6">
+      <g><animateTransform attributeName="transform" type="translate" values="-350,0;1950,0" dur="140s" repeatCount="indefinite"/>
+        <ellipse cx="0" cy="115" rx="80" ry="24" fill="rgba(255,255,255,.7)"/>
+        <ellipse cx="40" cy="104" rx="58" ry="20" fill="rgba(255,255,255,.82)"/>
+        <ellipse cx="65" cy="118" rx="42" ry="15" fill="rgba(255,255,255,.55)"/>
+      </g>
+      <g><animateTransform attributeName="transform" type="translate" values="1850,0;-400,0" dur="110s" repeatCount="indefinite"/>
+        <ellipse cx="0" cy="195" rx="60" ry="18" fill="rgba(255,255,255,.55)"/>
+        <ellipse cx="30" cy="187" rx="42" ry="15" fill="rgba(255,255,255,.68)"/>
+      </g>
+      <g><animateTransform attributeName="transform" type="translate" values="-550,0;2050,0" dur="170s" repeatCount="indefinite"/>
+        <ellipse cx="0" cy="70" rx="90" ry="28" fill="rgba(255,255,255,.45)"/>
+        <ellipse cx="46" cy="58" rx="60" ry="22" fill="rgba(255,255,255,.6)"/>
+        <ellipse cx="75" cy="72" rx="46" ry="16" fill="rgba(255,255,255,.4)"/>
+      </g>
+      <g><animateTransform attributeName="transform" type="translate" values="1650,0;-250,0" dur="95s" repeatCount="indefinite"/>
+        <ellipse cx="0" cy="275" rx="38" ry="11" fill="rgba(255,255,255,.35)"/>
+        <ellipse cx="20" cy="270" rx="26" ry="9" fill="rgba(255,255,255,.45)"/>
+      </g>
+    </g>
+
+    <!-- Subterranean Ground -->
+    <rect x="-200" y="750" width="2000" height="460" fill="url(#gnd)"/>
+
+    <!-- ── Underground: Highlighted Sacred Ring & Couple Silhouettes ── -->
+    <g id="undergroundRing">
+      <!-- Radiant Golden Aura Spotlight -->
+      <circle class="ring-aura" cx="800" cy="870" r="105" fill="url(#ringAura)"/>
+      
+      <!-- Ambient light shimmer particles -->
+      <circle cx="755" cy="840" r="1.5" fill="#fff5cc" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="3s" repeatCount="indefinite"/></circle>
+      <circle cx="845" cy="845" r="1.8" fill="#fff5cc" opacity=".7"><animate attributeName="opacity" values=".7;.2;.7" dur="3.5s" repeatCount="indefinite"/></circle>
+      <circle cx="740" cy="890" r="1.2" fill="#fedc78" opacity=".5"><animate attributeName="opacity" values=".3;.9;.3" dur="2.8s" repeatCount="indefinite"/></circle>
+      <circle cx="860" cy="885" r="1.4" fill="#fedc78" opacity=".6"><animate attributeName="opacity" values=".8;.3;.8" dur="4s" repeatCount="indefinite"/></circle>
+
+      <!-- Soft Outer Golden Ring Glow -->
+      <circle cx="800" cy="870" r="42" fill="none" stroke="#ffe794" stroke-width="9" opacity=".22"/>
+      
+      <!-- Primary Gold Ring Band -->
+      <circle cx="800" cy="870" r="42" fill="none" stroke="url(#rgld)" stroke-width="5.5"/>
+      <!-- Inner Specular Gleam -->
+      <circle cx="800" cy="870" r="39.5" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.2" stroke-dasharray="24 65"/>
+      <circle cx="800" cy="870" r="44.5" fill="none" stroke="rgba(255,245,200,.3)" stroke-width=".8"/>
+
+      <!-- Diamond mount (solid gold prongs) -->
+      <polygon points="794,831 800,821 806,831" fill="#f0ca55"/>
+      <line x1="792" y1="828" x2="808" y2="828" stroke="#fff4cf" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Diamond gem (faceted crystalline cuts) -->
+      <polygon points="800,812 809,823 806,831 794,831 791,823" fill="#ffffff" stroke="#c5991e" stroke-width=".8"/>
+      <polygon points="800,812 804,823 800,831 796,823" fill="#edf7fc" opacity=".95"/>
+      <polygon points="791,823 796,823 794,831" fill="#d4edf8" opacity=".85"/>
+      <polygon points="809,823 804,823 806,831" fill="#d4edf8" opacity=".85"/>
+      <polygon points="800,812 796,823 791,823" fill="#f4fbfe"/>
+      <polygon points="800,812 804,823 809,823" fill="#f4fbfe"/>
+
+      <!-- Diamond Sparkle Glint Flare -->
+      <g class="diamond-sparkle">
+        <line x1="800" y1="804" x2="800" y2="824" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="790" y1="814" x2="810" y2="814" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="800" cy="814" r="2.4" fill="#ffffff"/>
+        <circle cx="800" cy="814" r="5.5" fill="#fff5cc" opacity=".55"/>
+      </g>
+
+      <!-- Couple: Reed (left, taller groom) -->
+      <g transform="translate(789,858)" fill="#fce494">
+        <circle cx="0" cy="-9" r="4.2"/>
+        <path d="M-3.8-5 L-4.8 10 L-.8 10 L0 1.5 L.8 10 L4.8 10 L3.8-5Z"/>
+        <line x1="-3" y1="10" x2="-4.2" y2="19" stroke="#fce494" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="3" y1="10" x2="4.2" y2="19" stroke="#fce494" stroke-width="2.2" stroke-linecap="round"/>
+      </g>
+
+      <!-- Couple: Elin (right, bride in elegant flowing gown) -->
+      <g transform="translate(811,860)" fill="#fce494">
+        <circle cx="0" cy="-9" r="4"/>
+        <path d="M-3.2-5.5 L-7 18 L7 18 L3.2-5.5Z"/>
+        <path d="M2-11Q6-7 6 0Q5-4 2.5-7" fill="#fce494" opacity=".85"/>
+      </g>
+      
+      <!-- Holding Hands -->
+      <line x1="792.5" y1="863" x2="807.5" y2="863" stroke="#fce494" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Sacred Union Text -->
+      <text x="800" y="907" font-family="'Plus Jakarta Sans',sans-serif" font-size="7.5" font-weight="600" letter-spacing="3.5" fill="#fae08c" text-anchor="middle" opacity=".9">FOREVER</text>
+    </g>
+
+    <!-- Ground Line -->
+    <line x1="-200" y1="750" x2="1800" y2="750" stroke="#9e8a71" stroke-width="1.6"/>
+
+    <!-- Tree Shadow on Ground -->
+    <ellipse cx="800" cy="753" rx="90" ry="4.5" fill="rgba(0,0,0,.06)"/>
+
+    <!-- Grass (Generated via JS) -->
+    <g id="gL"></g>
+
+    <!-- Bushes (above ground) -->
+    <g>
+      <ellipse cx="698" cy="744" rx="22" ry="10" fill="#427329"/>
+      <ellipse cx="703" cy="741" rx="17" ry="8.5" fill="#558836"/>
+      <ellipse cx="695" cy="742" rx="12" ry="7" fill="#699f47"/>
+      <ellipse cx="918" cy="745" rx="17" ry="9" fill="#427329"/>
+      <ellipse cx="922" cy="743" rx="13" ry="7" fill="#558836"/>
+    </g>
+
+    <!-- Tree Group (scaled to sit gracefully beneath the sunny sky overlay) -->
+    <g id="treeGroup" transform="translate(800, 750) scale(0.92, 0.85) translate(-800, -750)">
+      <!-- Tree Trunk -->
+      <path d="M787 750 C786 718 788 692 786 665 C785 638 789 612 788 585 C787 558 791 532 790 505 C789 478 793 452 792 425 C791 398 795 372 794 345 C793 318 796 292 795 265 C794 238 798 215 797 205 L799 195 L801 195 L803 205 C806 215 808 238 807 265 C808 292 810 318 809 345 C810 372 812 398 811 425 C812 452 813 478 812 505 C813 532 815 558 814 585 C815 612 816 638 815 665 C816 692 817 718 816 750Z" fill="url(#bark)"/>
+      <!-- Bark texture highlights -->
+      <path d="M795 750Q794 550 797 400Q798 300 798 200" stroke="#332415" stroke-width=".6" fill="none" opacity=".2"/>
+      <path d="M807 750Q808 600 806 450Q804 350 803 250" stroke="#332415" stroke-width=".5" fill="none" opacity=".2"/>
+      <path d="M800 750Q799 600 801 450Q800 350 800 200" stroke="#876848" stroke-width=".5" fill="none" opacity=".18"/>
+
+      <!-- Branches (JS) -->
+      <g id="bL"></g>
+      <!-- Leaves (JS) -->
+      <g id="fL"></g>
+    </g>
+  </svg>
+
+  <!-- Audio Pill (Top Right) -->
+  <button id="ab" class="ap" aria-label="Toggle Music">
+    <span class="eb"><span></span><span></span><span></span></span>
+    <span id="al">Play</span>
+  </button>
+
+  <!-- Top Sky Overlay (Title + Timer + Leaves Badge — Clear of the Ring) -->
+  <div class="top-overlay">
+    <h1 class="title-row">Reed <span class="amp">&amp;</span> Elin</h1>
+    <p class="ceremony-sub">Married September 18, 2026 · KG</p>
     
-    <!-- Floating Top Bar -->
-    <header class="top-bar">
-      <div class="date-pill">September 18, 2026</div>
-      <button id="audioBtn" class="audio-btn" aria-label="Toggle Audio">
-        <span class="eq-bars">
-          <span class="eq-bar"></span>
-          <span class="eq-bar"></span>
-          <span class="eq-bar"></span>
-        </span>
-        <span id="audioLabel">Play</span>
-      </button>
-    </header>
-
-    <!-- Centered Content Cluster -->
-    <div class="center-cluster">
-
-      <!-- Header (Reed & Elin, KG 04:00 PM) -->
-      <div class="header-section">
-        <h1 class="names-title">
-          Reed <span class="amp">&amp;</span> Elin
-        </h1>
-        <p class="ceremony-subtext">KG · 04:00 PM</p>
-      </div>
-
-      <!-- ============================================================
-           ULTRA ZOOMED-IN STRAIGHT TIMELINE HERO
-           viewBox="0 0 540 190"
-           Center at (270, 95)
-           ============================================================ -->
-      <main class="timeline-container" aria-label="Timeline to marriage">
-        <svg class="timeline-svg" viewBox="0 0 540 190" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <!-- Ring Shading -->
-            <linearGradient id="ringGold" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#fdf4d4" />
-              <stop offset="45%" stop-color="#d4af37" />
-              <stop offset="100%" stop-color="#9a7b1c" />
-            </linearGradient>
-
-            <!-- Reed Active Gradient -->
-            <linearGradient id="reedGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#e5e0d5" />
-              <stop offset="100%" stop-color="#c59a42" />
-            </linearGradient>
-
-            <!-- Elin Active Gradient -->
-            <linearGradient id="elinGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#c59a42" />
-              <stop offset="100%" stop-color="#e5e0d5" />
-            </linearGradient>
-
-            <!-- Drop shadow for figures -->
-            <filter id="figureShadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1" />
-            </filter>
-          </defs>
-
-          <!-- Base Straight Line Track (Y=95) -->
-          <line x1="30" y1="95" x2="510" y2="95" class="track-line-base" />
-
-          <!-- Active Progress Line Left (Reed to Ring) -->
-          <line id="activeLineLeft" x1="30" y1="95" x2="90" y2="95" class="track-line-active" stroke="url(#reedGrad)" />
-
-          <!-- Active Progress Line Right (Elin to Ring) -->
-          <line id="activeLineRight" x1="450" y1="95" x2="510" y2="95" class="track-line-active" stroke="url(#elinGrad)" />
-
-          <!-- ============================================================
-               CENTER: GIANT WEDDING RING WITH SOLITAIRE DIAMOND
-               Center at (270, 95)
-               ============================================================ -->
-          <g class="ring-center" id="ringCenter">
-            <!-- Aura Circle -->
-            <circle cx="270" cy="95" r="36" fill="#ffffff" stroke="rgba(197, 154, 66, 0.22)" stroke-width="1.5" />
-            
-            <!-- Outer Gold Band -->
-            <circle cx="270" cy="95" r="23" fill="none" stroke="url(#ringGold)" stroke-width="5" filter="drop-shadow(0 3px 6px rgba(0,0,0,0.12))" />
-            <!-- Inner Gold Band Highlight -->
-            <circle cx="270" cy="95" r="20" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.9" />
-
-            <!-- Diamond Setting Mount -->
-            <polygon points="263,73 270,65 277,73" fill="#d4af37" />
-            <line x1="261" y1="71" x2="279" y2="71" stroke="#fdf4d4" stroke-width="2" stroke-linecap="round" />
-
-            <!-- Solitaire Diamond (Crisp & Refractive) -->
-            <polygon points="270,55 282,68 277,75 263,75 258,68" fill="#ffffff" stroke="#c59a42" stroke-width="1.2" />
-            <line x1="258" y1="68" x2="282" y2="68" stroke="#e0f2fe" stroke-width="1" />
-            <line x1="270" y1="55" x2="270" y2="75" stroke="#e0f2fe" stroke-width="1" />
-            <line x1="264" y1="68" x2="263" y2="75" stroke="#bae6fd" stroke-width="0.8" />
-            <line x1="276" y1="68" x2="277" y2="75" stroke="#bae6fd" stroke-width="0.8" />
-
-            <!-- Diamond Sparkle Glint -->
-            <g class="ring-sparkle">
-              <line x1="270" y1="43" x2="270" y2="57" stroke="#c59a42" stroke-width="1.5" stroke-linecap="round" />
-              <line x1="263" y1="50" x2="277" y2="50" stroke="#c59a42" stroke-width="1.5" stroke-linecap="round" />
-              <circle cx="270" cy="50" r="2" fill="#ffffff" />
-            </g>
-
-            <text x="270" y="137" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" letter-spacing="0.25em" fill="#c59a42" text-anchor="middle" font-weight="700">SEPT 18</text>
-          </g>
-
-          <!-- ============================================================
-               LEFT: REED (BOY) — ULTRA ZOOMED IN (~95px height)
-               ============================================================ -->
-          <g id="reedNode" class="character-node" transform="translate(100, 0)" filter="url(#figureShadow)">
-            <!-- Ground Shadow along straight line -->
-            <ellipse cx="0" cy="95" rx="18" ry="4" fill="rgba(0, 0, 0, 0.12)" />
-
-            <!-- Reed Figure -->
-            <g transform="translate(-18, 5)">
-              <!-- Head -->
-              <circle cx="18" cy="15" r="10" fill="#1b1920" />
-              <!-- Styled Hair -->
-              <path d="M 9 15 Q 14 4 23 6 Q 28 8 28 15 Q 21 8 13 10 Z" fill="#383440" />
-
-              <!-- Neck & Collar -->
-              <path d="M 14 24 L 22 24 L 21 30 L 15 30 Z" fill="#1b1920" />
-              <!-- Bowtie -->
-              <polygon points="15,29 18,31 21,29 21,32 18,30 15,32" fill="#c59a42" />
-
-              <!-- Suit Jacket / Body -->
-              <path d="M 9 31 C 9 29, 27 29, 27 31 L 29 65 C 29 67, 7 67, 7 65 Z" fill="#1b1920" />
-
-              <!-- Left Arm (trailing behind) -->
-              <path d="M 10 33 L 2 57" stroke="#1b1920" stroke-width="5" stroke-linecap="round" />
-
-              <!-- Right Arm (reaching forward towards ring holding flower) -->
-              <path d="M 26 33 L 37 53 L 44 50" stroke="#1b1920" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-              <!-- Golden rose in hand -->
-              <circle cx="45" cy="49" r="3.5" fill="#c59a42" />
-
-              <!-- Legs walking forward along straight line -->
-              <path d="M 12 65 L 9 92 L 15 94" stroke="#1b1920" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M 24 65 L 30 92 L 37 94" stroke="#1b1920" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
-            </g>
-
-            <!-- Name & Distance Labels -->
-            <text x="0" y="-8" class="char-name">REED</text>
-            <text id="reedStatus" x="0" y="118" class="char-status">Walking to you</text>
-          </g>
-
-          <!-- ============================================================
-               RIGHT: ELIN (GIRL) — ULTRA ZOOMED IN (~95px height)
-               ============================================================ -->
-          <g id="elinNode" class="character-node" transform="translate(440, 0)" filter="url(#figureShadow)">
-            <!-- Ground Shadow along straight line -->
-            <ellipse cx="0" cy="95" rx="18" ry="4" fill="rgba(0, 0, 0, 0.12)" />
-
-            <!-- Elin Figure -->
-            <g transform="translate(-18, 5)">
-              <!-- Head -->
-              <circle cx="18" cy="15" r="9.5" fill="#1b1920" />
-              
-              <!-- Long Cascading Hair -->
-              <path d="M 16 8 Q 29 11 30 26 Q 31 42 25 53 Q 21 40 21 22 Z" fill="#383440" />
-              <!-- Wedding Veil -->
-              <path d="M 15 8 Q 34 17 36 55 Q 28 40 20 18 Z" fill="rgba(197, 154, 66, 0.28)" />
-
-              <!-- Neck -->
-              <path d="M 15 24 L 21 24 L 20 29 L 16 29 Z" fill="#1b1920" />
-
-              <!-- Wedding Gown Bodice -->
-              <path d="M 11 29 C 11 27, 25 27, 25 29 L 24 49 L 12 49 Z" fill="#1b1920" />
-
-              <!-- Elegant Wedding Gown Skirt -->
-              <path d="M 12 49 Q 2 73 0 94 L 33 94 Q 29 73 24 49 Z" fill="#1b1920" />
-              <!-- Gown Crease Highlights -->
-              <path d="M 17 50 Q 13 73 11 94" stroke="#ffffff" stroke-width="1.4" opacity="0.3" />
-              <path d="M 19 50 Q 23 73 25 94" stroke="#ffffff" stroke-width="1.4" opacity="0.3" />
-
-              <!-- Left Arm (reaching forward toward the ring) -->
-              <path d="M 12 33 L -3 51 L -9 49" stroke="#1b1920" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
-              <!-- Bouquet in hand -->
-              <circle cx="-10" cy="48" r="3.5" fill="#e898a5" />
-
-              <!-- Right Arm (graceful side) -->
-              <path d="M 23 33 L 28 53" stroke="#1b1920" stroke-width="4.5" stroke-linecap="round" />
-            </g>
-
-            <!-- Name & Distance Labels -->
-            <text x="0" y="-8" class="char-name">ELIN</text>
-            <text id="elinStatus" x="0" y="118" class="char-status">Walking to you</text>
-          </g>
-        </svg>
-      </main>
-
-      <!-- ============================================================
-           COUNTDOWN CARDS (Brought Close to Center)
-           ============================================================ -->
-      <section class="countdown-section">
-        <div class="countdown-row">
-          <div class="countdown-unit">
-            <div id="days" class="countdown-number">00</div>
-            <div class="countdown-tag">DAYS</div>
-          </div>
-          <div class="countdown-unit">
-            <div id="hours" class="countdown-number">00</div>
-            <div class="countdown-tag">HOURS</div>
-          </div>
-          <div class="countdown-unit">
-            <div id="minutes" class="countdown-number">00</div>
-            <div class="countdown-tag">MINUTES</div>
-          </div>
-          <div class="countdown-unit">
-            <div id="seconds" class="countdown-number">00</div>
-            <div class="countdown-tag">SECONDS</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Intimate Footer Quote -->
-      <footer class="footer-quote">
-        <p class="quote-text">
-          "Every second brings me closer to you."
-        </p>
-      </footer>
-
+    <div class="cg">
+      <div class="cc"><span id="vd" class="cv">00</span><span class="cl">DAYS</span></div>
+      <div class="c-sep">·</div>
+      <div class="cc"><span id="vh" class="cv">00</span><span class="cl">HOURS</span></div>
+      <div class="c-sep">·</div>
+      <div class="cc"><span id="vm" class="cv">00</span><span class="cl">MINS</span></div>
+      <div class="c-sep">·</div>
+      <div class="cc"><span id="vs" class="cv">00</span><span class="cl">SECS</span></div>
     </div>
 
+    <div class="leaf-badge">
+      <span id="gb">🌿 0 Leaves Bloomed · Tree Growing</span>
+    </div>
   </div>
+</div>
 
-  <!-- Background Audio Element -->
-  <audio id="bgMusic" loop preload="auto">
-    <source src="./music.mp3" type="audio/mpeg" />
-  </audio>
+<audio id="au" loop preload="auto"><source src="./music.mp3" type="audio/mpeg"/></audio>
 
-  <script>
-    (function () {
-      'use strict';
+<script>
+(function(){
+'use strict';
 
-      // TARGET: September 18, 2026 at 4:00 PM (GMT+6)
-      const TARGET_TIME = new Date("2026-09-18T16:00:00+06:00").getTime();
-      const START_TIME = new Date("2026-01-01T00:00:00+06:00").getTime();
-      const TOTAL_SPAN = TARGET_TIME - START_TIME;
+const W=new Date('2026-09-18T17:53:00+06:00').getTime();
+const NS='http://www.w3.org/2000/svg';
 
-      // Coordinate boundaries along the straight X-axis line (Y=95)
-      // Viewbox is 540 wide: Ring is at X=270
-      // Reed start: X=70, meeting point: X=220
-      // Elin start: X=470, meeting point: X=320
-      const REED_START_X = 70;
-      const REED_END_X = 220;
-      const ELIN_START_X = 470;
-      const ELIN_END_X = 320;
+/* ── Seeded PRNG (Mulberry32) ── */
+function m32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 
-      const elDays = document.getElementById('days');
-      const elHours = document.getElementById('hours');
-      const elMinutes = document.getElementById('minutes');
-      const elSeconds = document.getElementById('seconds');
-      const reedNode = document.getElementById('reedNode');
-      const elinNode = document.getElementById('elinNode');
-      const activeLineLeft = document.getElementById('activeLineLeft');
-      const activeLineRight = document.getElementById('activeLineRight');
-      const reedStatus = document.getElementById('reedStatus');
-      const elinStatus = document.getElementById('elinStatus');
+/* ── Branch Data [x1,y1,x2,y2,thickness,tier] ── */
+const B=[
+  // Trunk segments (indices 0-10)
+  [800,750,798,700,14,0],[798,700,802,650,12,0],[802,650,797,600,11,0],
+  [797,600,801,550,10,0],[801,550,798,500,9,0],[798,500,800,450,8,0],
+  [800,450,797,400,7,0],[797,400,800,350,6,0],[800,350,798,300,5,0],
+  [798,300,800,250,4,0],[800,250,799,200,3,0],
 
-      function updateCountdown() {
-        const now = Date.now();
-        const diff = TARGET_TIME - now;
+  // Left low (tier 0)
+  [802,620,758,572,8,0],[758,572,712,532,5.5,0],[712,532,668,498,3.5,0],[668,498,638,468,2,0],
+  // Right low (tier 0)
+  [797,558,847,512,7,0],[847,512,898,472,5,0],[898,472,942,438,3,0],[942,438,972,408,1.8,0],
+  // Left mid (tier 0)
+  [800,458,752,422,5.5,0],[752,422,712,388,3.5,0],[712,388,682,358,2,0],
+  // Right mid (tier 0)
+  [797,398,842,368,4.5,0],[842,368,888,338,3,0],[888,338,920,312,1.8,0],
+  // Left high twig (tier 0)
+  [800,338,770,310,3.5,0],[770,310,748,288,2,0],
+  // Right high twig (tier 0)
+  [798,292,830,266,3,0],[830,266,856,246,1.5,0],
 
-        if (diff <= 0) {
-          elDays.textContent = "00";
-          elHours.textContent = "00";
-          elMinutes.textContent = "00";
-          elSeconds.textContent = "00";
-          setPositions(1);
-          reedStatus.textContent = "Joined at the ring ❤️";
-          elinStatus.textContent = "Joined at the ring ❤️";
-          return;
-        }
+  // Tier 1 (day 30)
+  [668,498,645,518,2.5,1],[645,518,622,504,1.5,1],
+  [942,438,962,458,2.2,1],[962,458,982,444,1.3,1],
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  // Tier 2 (day 90)
+  [712,532,690,550,3,2],[682,358,660,342,1.8,2],
+  [898,472,920,490,2.5,2],[920,312,942,300,1.5,2],
 
-        elDays.textContent = String(days).padStart(2, '0');
-        elHours.textContent = String(hours).padStart(2, '0');
-        elMinutes.textContent = String(minutes).padStart(2, '0');
-        elSeconds.textContent = String(seconds).padStart(2, '0');
+  // Tier 3 (day 180)
+  [748,288,730,270,1.8,3],[856,246,876,230,1.5,3],
+  [622,504,605,490,1.3,3],[982,444,1000,430,1.2,3],
 
-        // Linear progression along the straight timeline
-        const elapsed = now - START_TIME;
-        const progress = Math.max(0.06, Math.min(0.96, elapsed / TOTAL_SPAN));
-        setPositions(progress);
+  // Tier 4 (day 365)
+  [638,468,616,456,1.5,4],[972,408,992,396,1.3,4],
+  [730,270,713,258,1.3,4],[876,230,894,218,1.2,4],
 
-        reedStatus.textContent = `${days}d ${hours}h left`;
-        elinStatus.textContent = `${days}d ${hours}h left`;
-      }
+  // Tier 5 (day 730)
+  [660,342,640,330,1.3,5],[942,300,960,288,1.2,5],
+  [605,490,588,478,1.1,5],[1000,430,1016,418,1,5],
 
-      function setPositions(progress) {
-        const reedX = REED_START_X + (REED_END_X - REED_START_X) * progress;
-        const elinX = ELIN_START_X - (ELIN_START_X - ELIN_END_X) * progress;
+  // Tier 6 (day 1825, ~5yr)
+  [616,456,598,444,1.2,6],[992,396,1010,385,1.1,6],
+  [713,258,698,248,1.1,6],[894,218,910,208,1,6],
 
-        reedNode.setAttribute('transform', `translate(${reedX}, 0)`);
-        elinNode.setAttribute('transform', `translate(${elinX}, 0)`);
+  // Tier 7 (day 3650, ~10yr)
+  [640,330,622,320,1.1,7],[960,288,976,278,1,7],
+  [588,478,572,468,1,7],[1016,418,1030,408,.9,7]
+];
 
-        activeLineLeft.setAttribute('x2', reedX);
-        activeLineRight.setAttribute('x1', elinX);
-      }
+const TD=[0,30,90,180,365,730,1825,3650];
+const TE=11; // trunk ends at index 11
 
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
+const GRN=['#3e6f21','#4e842e','#61973f','#519133','#72a753','#3c6a23','#5c923b','#77b04d','#4d8b2a','#63a044'];
 
-      // ============================================================
-      // AUDIO SYSTEM WITH LOADING SCREEN INTEGRATION
-      // ============================================================
-      const bgAudio = document.getElementById('bgMusic');
-      const audioBtn = document.getElementById('audioBtn');
-      const audioLabel = document.getElementById('audioLabel');
-      const loadingScreen = document.getElementById('loadingScreen');
-      const loaderStatus = document.getElementById('loaderStatus');
-      const loaderEnterBtn = document.getElementById('loaderEnterBtn');
+const bL=document.getElementById('bL');
+const fL=document.getElementById('fL');
+const gL=document.getElementById('gL');
 
-      let isPlaying = false;
-      let synthContext = null;
-      let synthInterval = null;
-      let isUsingSynth = false;
+let nLeaves=0, drawnB=new Set();
 
-      // Gentle piano chords synthesizer fallback if music.mp3 is not placed yet
-      const notes = [261.63, 329.63, 392.00, 440.00, 523.25, 659.25];
-      function playChime() {
-        if (!synthContext || synthContext.state !== 'running') return;
-        const osc = synthContext.createOscillator();
-        const gain = synthContext.createGain();
-        const note = notes[Math.floor(Math.random() * notes.length)];
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(note, synthContext.currentTime);
+/* ── Elapsed Calculator ── */
+function elapsed(){
+  const d=Date.now()-W;
+  if(d<0)return{d:0,h:0,m:0,s:0,td:0};
+  return{d:Math.floor(d/864e5),h:Math.floor(d%864e5/36e5),m:Math.floor(d%36e5/6e4),s:Math.floor(d%6e4/1e3),td:Math.floor(d/864e5)};
+}
 
-        const now = synthContext.currentTime;
-        gain.gain.setValueAtTime(0.0001, now);
-        gain.gain.linearRampToValueAtTime(0.05, now + 0.06);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
+function curTier(days){for(let i=TD.length-1;i>=0;i--)if(days>=TD[i])return i;return 0}
 
-        osc.connect(gain);
-        gain.connect(synthContext.destination);
-        osc.start(now);
-        osc.stop(now + 2.6);
-      }
+/* ── Draw Branch ── */
+function drawB(i){
+  if(drawnB.has(i))return;drawnB.add(i);
+  const b=B[i],s=i%2===0?1:-1;
+  const mx=(b[0]+b[2])/2+(b[1]-b[3])*.12*s;
+  const my=(b[1]+b[3])/2+(b[0]-b[2])*.12*s;
+  const p=document.createElementNS(NS,'path');
+  p.setAttribute('d',`M${b[0]} ${b[1]}Q${mx.toFixed(1)} ${my.toFixed(1)} ${b[2]} ${b[3]}`);
+  const ci=i%3;
+  p.setAttribute('stroke',ci===0?'#483522':ci===1?'#56412f':'#634f3c');
+  p.setAttribute('stroke-width',b[4]);
+  p.setAttribute('fill','none');
+  p.setAttribute('stroke-linecap','round');
+  bL.appendChild(p);
+}
 
-      function playAudio() {
-        bgAudio.play().then(() => {
-          isPlaying = true;
-          isUsingSynth = false;
-          audioBtn.classList.add('playing');
-          audioLabel.textContent = "Pause";
-        }).catch(() => {
-          try {
-            const AudioCtx = window.AudioContext || window.webkitAudioContext;
-            if (!synthContext) synthContext = new AudioCtx();
-            synthContext.resume().then(() => {
-              isPlaying = true;
-              isUsingSynth = true;
-              audioBtn.classList.add('playing');
-              audioLabel.textContent = "Pause";
-              playChime();
-              if (!synthInterval) {
-                synthInterval = setInterval(playChime, 1800);
-              }
-            });
-          } catch (e) {
-            console.log("Audio not supported", e);
-          }
-        });
-      }
+/* ── Update Branches ── */
+function updateB(days){
+  const t=curTier(days);
+  for(let i=TE;i<B.length;i++)if(B[i][5]<=t)drawB(i);
+}
 
-      function pauseAudio() {
-        isPlaying = false;
-        audioBtn.classList.remove('playing');
-        audioLabel.textContent = "Play";
-        bgAudio.pause();
-        if (synthInterval) {
-          clearInterval(synthInterval);
-          synthInterval = null;
-        }
-        if (synthContext && synthContext.state === 'running') {
-          synthContext.suspend();
-        }
-      }
+/* ── Leaf Renderer ── */
+function mkLeaf(day){
+  const t=curTier(day);
+  const avail=[];
+  for(let i=TE;i<B.length;i++)if(B[i][5]<=t)avail.push(B[i]);
+  if(!avail.length)avail.push(B[TE]);
 
-      function toggleAudio() {
-        if (isPlaying) {
-          pauseAudio();
-        } else {
-          playAudio();
-        }
-      }
-      audioBtn.addEventListener('click', toggleAudio);
+  const r=m32(day*2654435761+12345);
+  const br=avail[Math.floor(r()*avail.length)];
+  const pos=.15+r()*.7;
+  let x=br[0]+(br[2]-br[0])*pos;
+  let y=br[1]+(br[3]-br[1])*pos;
 
-      // ============================================================
-      // LOADING SCREEN LOGIC
-      // ============================================================
-      let audioReady = false;
+  // Canopy spread increases with time
+  const sp=Math.min(day/400,6);
+  x+=(r()-.5)*sp*14;
+  y+=(r()-.5)*sp*10;
 
-      function onAudioReady() {
-        if (audioReady) return;
-        audioReady = true;
-        loaderStatus.textContent = "Ready for you";
-        loaderEnterBtn.style.display = "inline-flex";
+  const ang=r()*360;
+  const sc=.55+r()*.5;
+  const ty=day%3;
+  const c=[GRN[Math.floor(r()*10)],GRN[Math.floor(r()*10)],GRN[Math.floor(r()*10)]];
 
-        bgAudio.play().then(() => {
-          isPlaying = true;
-          audioBtn.classList.add('playing');
-          audioLabel.textContent = "Pause";
-          hideLoader();
-        }).catch(() => {
-          loaderEnterBtn.style.display = "inline-flex";
-        });
-      }
+  const g=document.createElementNS(NS,'g');
+  g.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)})rotate(${ang.toFixed(0)})scale(${sc.toFixed(2)})`);
 
-      function hideLoader() {
-        loadingScreen.classList.add('hidden');
-        setTimeout(() => {
-          loadingScreen.remove();
-        }, 900);
-      }
+  const L=13;
+  if(ty===0){
+    // Single leaf
+    const p=document.createElementNS(NS,'path');
+    p.setAttribute('d',`M0 0C-3.2 -${(L*.3).toFixed(1)} -4.2 -${(L*.65).toFixed(1)} 0 -${L}C4.2 -${(L*.65).toFixed(1)} 3.2 -${(L*.3).toFixed(1)} 0 0`);
+    p.setAttribute('fill',c[0]);g.appendChild(p);
+  }else if(ty===1){
+    // Pair
+    const p1=document.createElementNS(NS,'path');
+    p1.setAttribute('d',`M0 0C-4.5 -2 -7.5 -${(L*.5).toFixed(1)} -4.5 -${(L*.82).toFixed(1)}C-1.2 -${(L*.55).toFixed(1)} -.5 -${(L*.15).toFixed(1)} 0 0`);
+    p1.setAttribute('fill',c[0]);g.appendChild(p1);
+    const p2=document.createElementNS(NS,'path');
+    p2.setAttribute('d',`M0 0C4.5 -2 7.5 -${(L*.5).toFixed(1)} 4.5 -${(L*.82).toFixed(1)}C1.2 -${(L*.55).toFixed(1)} .5 -${(L*.15).toFixed(1)} 0 0`);
+    p2.setAttribute('fill',c[1]);g.appendChild(p2);
+  }else{
+    // Trio
+    const p1=document.createElementNS(NS,'path');
+    p1.setAttribute('d',`M0 0C-4.2 -1.2 -6.5 -${(L*.42).toFixed(1)} -4 -${(L*.72).toFixed(1)}C-1 -${(L*.48).toFixed(1)} -.4 -${(L*.12).toFixed(1)} 0 0`);
+    p1.setAttribute('fill',c[0]);g.appendChild(p1);
+    const p2=document.createElementNS(NS,'path');
+    p2.setAttribute('d',`M0 0C-1.6 -${(L*.28).toFixed(1)} -1.6 -${(L*.62).toFixed(1)} 0 -${(L*.92).toFixed(1)}C1.6 -${(L*.62).toFixed(1)} 1.6 -${(L*.28).toFixed(1)} 0 0`);
+    p2.setAttribute('fill',c[1]);g.appendChild(p2);
+    const p3=document.createElementNS(NS,'path');
+    p3.setAttribute('d',`M0 0C4.2 -1.2 6.5 -${(L*.42).toFixed(1)} 4 -${(L*.72).toFixed(1)}C1 -${(L*.48).toFixed(1)} .4 -${(L*.12).toFixed(1)} 0 0`);
+    p3.setAttribute('fill',c[2]);g.appendChild(p3);
+  }
+  return g;
+}
 
-      function enterSite() {
-        playAudio();
-        hideLoader();
-      }
+function updateLeaves(n){
+  while(nLeaves<n){nLeaves++;fL.appendChild(mkLeaf(nLeaves))}
+}
 
-      loaderEnterBtn.addEventListener('click', enterSite);
-      loadingScreen.addEventListener('click', (e) => {
-        if (audioReady) enterSite();
-      });
+/* ── Grass Generation (Sunlit winter noon palette) ── */
+function genGrass(){
+  const r=m32(42);let h='';
+  for(let i=0;i<550;i++){
+    const x=(i/550)*1800-100+(r()-.5)*4;
+    const ht=3+r()*30;
+    const cv=(r()-.5)*14;
+    const gr=75+r()*105,rd=40+r()*50,bl=15+r()*25;
+    const w=.6+r()*1.4;
+    h+=`<path d="M${x.toFixed(1)} 750Q${(x+cv).toFixed(1)} ${(750-ht*.5).toFixed(1)} ${(x+cv*.6).toFixed(1)} ${(750-ht).toFixed(1)}" stroke="rgb(${rd|0},${gr|0},${bl|0})" stroke-width="${w.toFixed(1)}" fill="none" stroke-linecap="round"/>`;
+  }
+  // Wildflower seed accents (snowdrops, buttercups, soft petals)
+  for(let i=0;i<45;i++){
+    const x=r()*1800-100,y=750-5-r()*20;
+    const cls=['#fff9e6','#fae2e2','#d8edf8','#f6deec','#e0f0d2','#faeedc'];
+    h+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(.7+r()*1.3).toFixed(1)}" fill="${cls[r()*6|0]}" opacity="${(.45+r()*.5).toFixed(2)}"/>`;
+  }
+  gL.innerHTML=h;
+}
 
-      bgAudio.addEventListener('canplaythrough', onAudioReady);
-      bgAudio.addEventListener('loadeddata', onAudioReady);
-      bgAudio.addEventListener('error', () => {
-        onAudioReady();
-      });
+/* ── Counter Update ── */
+function tick(){
+  const e=elapsed();
+  document.getElementById('vd').textContent=String(e.d).padStart(2,'0');
+  document.getElementById('vh').textContent=String(e.h).padStart(2,'0');
+  document.getElementById('vm').textContent=String(e.m).padStart(2,'0');
+  document.getElementById('vs').textContent=String(e.s).padStart(2,'0');
+  document.getElementById('gb').textContent=
+    `🌿 ${e.td} Lea${e.td!==1?'ves':'f'} Bloomed (Day ${e.td}) · Tree ${e.td>0?'Growing':'Planted'}`;
+  updateB(e.td);
+  updateLeaves(e.td);
+}
 
-      setTimeout(onAudioReady, 2500);
+/* ── Audio System ── */
+function initAudio(){
+  const au=document.getElementById('au');
+  const btn=document.getElementById('ab');
+  const lbl=document.getElementById('al');
+  const ld=document.getElementById('loader');
+  const ls=document.getElementById('lst');
+  const lb=document.getElementById('lbtn');
+  let playing=false;
 
-    })();
-  </script>
+  function play(){au.play().then(()=>{playing=true;btn.classList.add('on');lbl.textContent='Pause'}).catch(()=>{})}
+  function pause(){au.pause();playing=false;btn.classList.remove('on');lbl.textContent='Play'}
+  btn.addEventListener('click',()=>playing?pause():play());
+
+  let ready=false;
+  function onReady(){
+    if(ready)return;ready=true;
+    ls.textContent='Ready';lb.style.display='inline-block';
+    au.play().then(()=>{playing=true;btn.classList.add('on');lbl.textContent='Pause';hide()}).catch(()=>{lb.style.display='inline-block'});
+  }
+  function hide(){ld.classList.add('hidden');setTimeout(()=>ld.remove(),800)}
+  function enter(){play();hide()}
+
+  lb.addEventListener('click',enter);
+  ld.addEventListener('click',e=>{if(ready)enter()});
+  au.addEventListener('canplaythrough',onReady);
+  au.addEventListener('loadeddata',onReady);
+  au.addEventListener('error',onReady);
+  setTimeout(onReady,2500);
+}
+
+/* ── Init ── */
+document.addEventListener('DOMContentLoaded',function(){
+  genGrass();
+  tick();
+  setInterval(tick,1000);
+  initAudio();
+});
+})();
+</script>
 </body>
 </html>
